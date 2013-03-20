@@ -1,7 +1,7 @@
 class Calculadora
 
 	def soma(a,b)
-		a
+		a + b
 	end
 
 end
