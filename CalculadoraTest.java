@@ -1,7 +1,8 @@
 public class CalculadoraTest{
 
 	public static void main(String[] args){
-		System.out.println("abordando!!!");
-		System.exit(-1);
+		Calculadora cal = new Calculadora();
+		if(cal.soma(4,5) != 9)
+			throw new RuntimeException("Erro na soma!!");
 	}
 }
