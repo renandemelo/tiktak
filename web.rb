@@ -1,7 +1,7 @@
 require 'sinatra'
 require './calculadora'
 
-set :port,4000
+set :port,3000
 
 get '/soma' do
   cal = Calculadora.new
