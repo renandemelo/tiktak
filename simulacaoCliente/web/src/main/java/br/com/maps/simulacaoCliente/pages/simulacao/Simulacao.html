@@ -6,15 +6,17 @@
 
 <body>
     <wicket:extend>
-    	<div>
-    		<label>Usuário:</label><input type="text" size="30" class="texto" wicket:id="txt_usuario"/>
-    	</div>
-    	<div>    	    	
-    		<label>Funcionalidade: </label><input type="text" size="30" wicket:id="txt_funcionalidade" />
-    	</div>
-    	<div>
-    		<input type="submit" wicket:id="ok" value="Enviar"/>
-    	</div>
+    	<form wicket:id="form">
+	    	<div>
+	    		<label>Usuário:</label><input type="text" size="30" class="texto" wicket:id="txt_usuario"/>
+	    	</div>
+	    	<div>    	    	
+	    		<label>Funcionalidade: </label><input type="text" size="30" wicket:id="txt_funcionalidade" />
+	    	</div>
+	    	<div>
+	    		<input type="submit" wicket:id="ok" value="Enviar"/>
+	    	</div>
+	    </form>
     </wicket:extend>
 </body>
 </html>
