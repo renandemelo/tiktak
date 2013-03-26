@@ -2,6 +2,7 @@ package br.com.maps.simulacaoCliente;
 
 import br.com.maps.simulacaoCliente.pages.AlterarSenhaPage;
 import br.com.maps.simulacaoCliente.pages.CrudUsuarioPage;
+import br.com.maps.simulacaoCliente.pages.simulacao.Simulacao;
 import jmine.tec.datadigester.web.pages.importacao.Importacao;
 import jmine.tec.persist.web.pages.audit.ConsultaTrilhaAuditoria;
 import jmine.tec.persist.web.pages.auth.Authorization;
@@ -33,6 +34,7 @@ public class WebApplicationMenuCreator extends AbstractMenuConfigFactoryBean {
         config.addPage(Importacao.class, "Infra", "Importacao");
         config.addPage(AlterarSenhaPage.class, "Infra", "Alterar senha");
         config.addPage(CrudUsuarioPage.class, "Infra", "Controle de acesso");
+        config.addPage(Simulacao.class, "Simulação", "Tela de simulação");
         
         return config;
     }
