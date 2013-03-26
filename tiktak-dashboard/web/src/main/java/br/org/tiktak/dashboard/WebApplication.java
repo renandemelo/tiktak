@@ -1,8 +1,7 @@
-package br.com.maps.simulacaoCliente;
+package br.org.tiktak.dashboard;
 
 import jmine.tec.web.wicket.application.JMineWicketWebApplication;
 import jmine.tec.web.wicket.pages.main.Home;
-import jmine.tec.web.wicket.pages.main.Login;
 import jmine.tec.web.wicket.pages.main.Logout;
 import jmine.tec.web.wicket.security.SecureSession;
 import jmine.tec.web.wicket.upperCase.UpperCaseBeforeRenderListener;
@@ -23,7 +22,6 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import bancosys.tec.rtm.impl.RtmController;
 import bancosys.tec.security.SecurityManager;
 import bancosys.tec.security.impl.web.WebSecurityContext;
-import br.com.maps.simulacaoCliente.pages.simulacao.Simulacao;
 
 /**
  * Starting point webApplication
@@ -54,7 +52,7 @@ public class WebApplication extends JMineWicketWebApplication {
         resourceSettings.setCachingStrategy(new FilenameWithVersionResourceCachingStrategy(new LastModifiedResourceVersion()));
 
         this.mount(new MountedMapper("logout", Logout.class));
-        this.mount(new MountedMapper("login", Login.class));
+        this.mount(new MountedMapper("login", br.org.tiktak.dashboard.login.Login.class));
         this.mount(new MountedMapper("accessDenied", AccessDeniedPage.class));
         this.mount(new MountedMapper("home", Home.class));
     }
@@ -64,7 +62,7 @@ public class WebApplication extends JMineWicketWebApplication {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return Simulacao.class;
+        return Home.class;
     }
 
     /**
