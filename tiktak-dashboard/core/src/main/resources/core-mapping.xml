@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="mappingResources" class="bancosys.tec.persist.hibernate.PersistableClassListFactory">
+        <property name="name" value="mappingResources" />
+        <property name="dependencies">
+            <list>
+                <ref bean="securityMappingResources" />
+                <ref bean="rtmMappingResources" />
+            </list>
+
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value type="java.lang.Class">bancosys.tec.persist.audit.domain.AuditProperty</value>
+                <value type="java.lang.Class">bancosys.tec.persist.audit.domain.AuditValuedProperty</value>
+                <value type="java.lang.Class">bancosys.tec.persist.audit.domain.AuditVersion</value>
+                <value type="java.lang.Class">bancosys.tec.persist.audit.domain.AuditEntity</value>
+            </list>
+        </property>
+        <property name="packageToScan" value="br.org.tiktak.dashboard" />
+    </bean>
+</beans>

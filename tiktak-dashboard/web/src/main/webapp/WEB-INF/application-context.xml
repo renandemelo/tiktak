@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <import resource="classpath:jmine-tec-web-wicket.xml" />
+
+	<bean id="menuCreator" class="jmine.tec.web.wicket.component.menu.MenuCreator">
+        <property name="menuId" value="menuPrincipal" />
+        <property name="menu" ref="menuApplication" />
+    </bean>
+    
+    <bean id="menuApplication"
+        class="jmine.tec.web.wicket.component.menu.cfg.MenuConfigMegaMenuAdapter">
+        <constructor-arg>
+            <bean
+                class="jmine.tec.web.wicket.component.menu.cfg.MenuConfigMergerFactoryBean">
+                <constructor-arg>
+                    <list>
+                        <ref bean="menuApplicationBase" />
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="menuApplicationBase" class="br.org.tiktak.dashboard.WebApplicationMenuCreator" />
+
+    <bean id="applicationBean" class="br.org.tiktak.dashboard.WebApplication">
+        <property name="authorizationStrategy" ref="securityServiceAuthorizationStrategy" />
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="rtmController" ref="rtmController"></property>
+        <property name="beanWirer" ref="persistenceAwareBeanWirer" />
+        <property name="style" value="my_style"/>
+    </bean>
+
+    <bean id="securityFilter" class="br.org.tiktak.dashboard.ApplicationSecurityFilter">
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="loginUrl" value="/login"></property>
+        <property name="permissionDeniedUrl" value="/accessDenied"></property>
+    </bean>
+
+    <bean id="buildInfo" class="jmine.tec.web.wicket.component.buildinfo.BuildInfo">
+        <property name="filename" value="buildInfo-group-web.properties" />
+    </bean>
+
+    <bean id="disabledChineseWallEntitiesList" class="bancosys.tec.utils.factory.HierarchyClassListFactoryBean">
+        <constructor-arg>
+            <value>bancosys.tec.persist.authorization.Authorizable</value>
+        </constructor-arg>
+    </bean>
+</beans>
