@@ -13,7 +13,7 @@ public class Api {
 		System.out.println(json);
 		
         try {
-            FileWriter writer = new FileWriter("tik.tak");
+            FileWriter writer = new FileWriter("tik.tak", true);
             writer.write(json);
             writer.close();
         } catch (IOException e) {
