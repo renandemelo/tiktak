@@ -41,6 +41,11 @@
             <artifactId>jmine-tec-services-impl</artifactId>
             <type>db</type>
         </dependency>
+        <dependency>
+        	<groupId>br.org.tiktak</groupId>
+        	<artifactId>tiktak-api</artifactId>
+        	<version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
