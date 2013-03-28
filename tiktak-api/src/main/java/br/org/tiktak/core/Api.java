@@ -20,8 +20,4 @@ public class Api {
             e.printStackTrace();
         }
 	}
-	
-	public static void main(String[] args){
-		Api.registrarEvento("albert", "cadastro");
-	}
 }
