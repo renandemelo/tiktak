@@ -10,7 +10,6 @@ public class Api {
 		Dados dados = new Dados(usuario, evento);
 		Gson gson = new Gson();
 		String json = gson.toJson(dados);
-		System.out.println(json);
 		
         try {
             FileWriter writer = new FileWriter("tik.tak", true);
