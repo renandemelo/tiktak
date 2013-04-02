@@ -52,7 +52,7 @@ public class TesteConteudoSimulacaoCliente {
 		driver.findElement(By.name("txt_usuario")).sendKeys(usuario);
 		driver.findElement(By.name("txt_funcionalidade")).clear();
 		driver.findElement(By.name("txt_funcionalidade")).sendKeys(funcionalidade);
-		driver.findElement(By.id("ok9")).click();
+		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
 		String conteudoArquivo = carrega("../tiktak/tik.tak");
 		assertTrue(conteudoArquivo.contains(usuario));
 		assertTrue(conteudoArquivo.contains(funcionalidade));
