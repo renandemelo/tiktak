@@ -23,7 +23,7 @@ public class Dados {
 
 	public Dados(String usuario, String evento){
 		this.time = new Date();
-		UUID uuid = UUID.nameUUIDFromBytes((time + usuario + evento).getBytes());		
+		UUID uuid = UUID.randomUUID();		
 		this.uuid = uuid;
 		this.usuario = usuario;
 		this.evento = evento;		

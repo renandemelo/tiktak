@@ -21,7 +21,7 @@ public class Api {
             	raf.seek(2);
             	raf.write(json.getBytes());
             } else {
-            	raf.seek(raf.length() - 4);
+            	raf.seek(raf.length() - 2);
             	raf.write((",\n" + json).getBytes());
             }
             raf.write("]".getBytes());

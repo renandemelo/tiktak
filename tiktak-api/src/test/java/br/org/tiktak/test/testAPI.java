@@ -25,17 +25,18 @@ public class testAPI {
 		
 		String usuario = "Claynon";
 		String funcionalidade = "teste";
+		
 		File file = new File("../tiktak/tik.tak");
 		if (file.exists())
 			file.delete();
 		Date antes = new Date(System.currentTimeMillis()-1);
 		Api.registrarEvento(usuario, funcionalidade);
+		Api.registrarEvento(usuario, funcionalidade);
 		Date depois = new Date(System.currentTimeMillis()+1);
-		
-		
 		FileReader reader = new FileReader(file);
 		List<Dados> lista = GsonFactory.getGson().fromJson(reader,new TypeToken<List<Dados>>() {}.getType());
 		Dados ultimo = lista.get(lista.size() - 1);
+		
 		assertEquals(usuario,ultimo.getUsuario());
 		assertEquals(funcionalidade,ultimo.getEvento());
 		assertNotNull(ultimo.getUuid());		
