@@ -1,32 +1,30 @@
 package br.org.tiktak.core;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
-import com.google.gson.Gson;
 
 public class Api {
 	
 	
 	public static void registrarEvento(String usuario, String evento){
 		Dados dados = new Dados(usuario, evento);
-		Gson gson = new Gson();
-		String json = gson.toJson(dados) + "\n";
+		
+		String json = GsonFactory.getGson().toJson(dados) + "\n";
 		
         try {
             File arquivo = criarArquivo();
             RandomAccessFile raf = new RandomAccessFile(arquivo,"rw");
-            raf.seek(4);
-            //fix me
-            boolean estaVazio = raf.readChar() == ']';
+            raf.readLine();
+            boolean estaVazio = raf.readLine().equals("]");
             if(estaVazio){
-            	raf.writeChars(json);
-            }else{
-            	raf.seek(raf.length()-6);
-            	raf.writeChars(",\n" + json);
+            	raf.seek(2);
+            	raf.write(json.getBytes());
+            } else {
+            	raf.seek(raf.length() - 4);
+            	raf.write((",\n" + json).getBytes());
             }
+            raf.write("]".getBytes());
             raf.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,8 +40,9 @@ public class Api {
 		File arquivo = new File("../tiktak/tik.tak");
 		if(!arquivo.exists()){
 			arquivo.createNewFile();
-			FileWriter writer = new FileWriter(arquivo);
-			writer.write("[\n]");
+			RandomAccessFile writer = new RandomAccessFile(arquivo,"rw");
+//			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(arquivo), "UTF-8"));
+			writer.write("[\n]".getBytes());
 			writer.close();
 		}
 		return arquivo;

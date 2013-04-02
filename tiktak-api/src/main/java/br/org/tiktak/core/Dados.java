@@ -1,28 +1,35 @@
 package br.org.tiktak.core;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 public class Dados {
-	UUID uuid;
-	String usuario;
-	String evento;
-
+	private UUID uuid;
+	private String usuario;
+	private String evento;
+	private Date time;
 	
-	public String getTimeStamp(){
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		return dateFormat.format(date);
+	public UUID getUuid() {
+		return uuid;
 	}
-	
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public String getEvento() {
+		return evento;
+	}
+
 	public Dados(String usuario, String evento){
-		String time = getTimeStamp();
-		UUID uuid = UUID.nameUUIDFromBytes((time + usuario + evento).getBytes());
-		
+		this.time = new Date();
+		UUID uuid = UUID.nameUUIDFromBytes((time + usuario + evento).getBytes());		
 		this.uuid = uuid;
 		this.usuario = usuario;
-		this.evento = evento;
+		this.evento = evento;		
+	}
+
+	public Date getTime() {
+		return time;
 	}
 }
