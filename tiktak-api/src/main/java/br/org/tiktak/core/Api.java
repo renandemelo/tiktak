@@ -41,7 +41,6 @@ public class Api {
 		if(!arquivo.exists()){
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo,"rw");
-//			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(arquivo), "UTF-8"));
 			writer.write("[\n]".getBytes());
 			writer.close();
 		}
