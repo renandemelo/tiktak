@@ -1,6 +1,6 @@
 *.class
 .classpath
-.project
+*.project
 .settings
 target/
 simulacaoCliente/tiktak/

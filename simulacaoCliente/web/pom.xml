@@ -12,6 +12,13 @@
     <name>Jmine Web App - Web</name>
     <url>http://www.jmine.com.br</url>
     <packaging>war</packaging>
+    
+    <repositories>
+	    <repository>
+	      <id>seleniumhq</id>
+	      <url>http://repo1.maven.org/maven2/org/seleniumhq/selenium/</url>
+	    </repository>
+ 	</repositories>
 
     <build>
         <finalName>simulacaoCliente</finalName>
@@ -141,6 +148,11 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+	    <dependency>
+	        <groupId>org.seleniumhq.selenium</groupId>
+	        <artifactId>selenium-java</artifactId>
+	        <version>2.31.0</version>
+	    </dependency>  
     </dependencies>
 
 </project>

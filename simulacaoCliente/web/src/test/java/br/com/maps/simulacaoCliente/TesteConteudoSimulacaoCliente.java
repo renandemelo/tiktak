@@ -11,9 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -32,8 +30,8 @@ public class TesteConteudoSimulacaoCliente {
 
   @Test
 	public void testE() throws Exception {
-		String usuario = "albert" + System.currentTimeMillis();
-		String funcionalidade = "teste-api-novo" + System.currentTimeMillis();
+		String usuario = "ALBERT" + System.currentTimeMillis();
+		String funcionalidade = "TESTE-API-NOVO" + System.currentTimeMillis();
 		driver.get(baseUrl + "/login?1");
 		driver.findElement(By.name("username")).clear();
 		driver.findElement(By.name("username")).sendKeys("admin");
@@ -54,6 +52,7 @@ public class TesteConteudoSimulacaoCliente {
 		driver.findElement(By.name("txt_funcionalidade")).sendKeys(funcionalidade);
 		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
 		String conteudoArquivo = carrega("../tiktak/tik.tak");
+		Boolean resultado = conteudoArquivo.contains(usuario);
 		assertTrue(conteudoArquivo.contains(usuario));
 		assertTrue(conteudoArquivo.contains(funcionalidade));
 	}
@@ -81,26 +80,26 @@ public class TesteConteudoSimulacaoCliente {
     }
   }
 
-  private boolean isElementPresent(By by) {
-    try {
-      driver.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
-  }
-
-  private String closeAlertAndGetItsText() {
-    try {
-      Alert alert = driver.switchTo().alert();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alert.getText();
-    } finally {
-      acceptNextAlert = true;
-    }
-  }
+//  private boolean isElementPresent(By by) {
+//    try {
+//      driver.findElement(by);
+//      return true;
+//    } catch (NoSuchElementException e) {
+//      return false;
+//    }
+//  }
+//
+//  private String closeAlertAndGetItsText() {
+//    try {
+//      Alert alert = driver.switchTo().alert();
+//      if (acceptNextAlert) {
+//        alert.accept();
+//      } else {
+//        alert.dismiss();
+//      }
+//      return alert.getText();
+//    } finally {
+//      acceptNextAlert = true;
+//    }
+//  }
 }
