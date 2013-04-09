@@ -7,13 +7,14 @@ import java.io.RandomAccessFile;
 public class Api {
 	
 	
-	public static void registrarEvento(String usuario, String evento){
-		Dados dados = new Dados(usuario, evento);
+	public static void registrarEvento(String sistema, String usuario, String evento){
+		Log log = new Log(sistema);
+		log.registrarEvento(usuario, evento);
 		
-		String json = GsonFactory.getGson().toJson(dados) + "\n";
+		String json = GsonFactory.getGson().toJson(log) + "\n";
 		
         try {
-            File arquivo = criarArquivo();
+            File arquivo = criarArquivo(sistema);
             RandomAccessFile raf = new RandomAccessFile(arquivo,"rw");
             raf.readLine();
             boolean estaVazio = raf.readLine().equals("]");
@@ -31,7 +32,7 @@ public class Api {
         }
 	}
 
-	private static File criarArquivo() throws IOException {
+	private static File criarArquivo(String sistema) throws IOException {
 		
 		File pasta = new File("../tiktak");
 		if(!pasta.exists()){
@@ -41,7 +42,9 @@ public class Api {
 		if(!arquivo.exists()){
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo,"rw");
-			writer.write("[\n]".getBytes());
+			writer.write(("{\n" + 
+						 '"' + "sistema" + '"' + ":" + '"' + sistema + '"' + ",\n" +
+						 '"' + "eventos" + '"' + ":" + "[\n]\n}").getBytes());
 			writer.close();
 		}
 		return arquivo;
