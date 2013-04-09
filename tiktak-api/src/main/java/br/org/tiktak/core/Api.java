@@ -33,11 +33,11 @@ public class Api {
 
 	private static File criarArquivo() throws IOException {
 		
-		File pasta = new File("../tiktak");
+		File pasta = new File("../tiktakBD");
 		if(!pasta.exists()){
 			pasta.mkdir();
 		}
-		File arquivo = new File("../tiktak/tik.tak");
+		File arquivo = new File("../tiktakBD/tik.tak");
 		if(!arquivo.exists()){
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo,"rw");
