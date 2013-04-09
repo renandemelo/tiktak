@@ -1,46 +1,26 @@
 package br.org.tiktak.core;
 
-import java.util.Date;
 import java.util.LinkedList;
-import java.util.UUID;
 
 public class Log {
-	private UUID uuid;
 	private String sistema;
-	private String usuario;
-	private LinkedList<String> eventos;
-	private Date time;
-	
-	public UUID getUuid() {
-		return uuid;
-	}
+	private LinkedList<Evento> eventos;
 	
 	public String getSistema() {
 		return sistema;
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public LinkedList<String> getEventos() {
+	public LinkedList<Evento> getEventos() {
 		return eventos;
 	}
 	
-	public Date getTime() {
-		return time;
-	}
-
 	public Log(String sistema){
 		this.sistema = sistema;
-		this.eventos = new LinkedList<String>();
+		this.eventos = new LinkedList<Evento>();
 	}
 	
-	public void registrarEvento(String usuario, String evento){
-		this.time = new Date();
-		UUID uuid = UUID.randomUUID();		
-		this.uuid = uuid;
-		this.usuario = usuario;
+	public void registrarEvento(String usuario, String funcionalidade){
+		Evento evento = new Evento(usuario, funcionalidade);
 		this.eventos.add(evento);		
 	}
 }
