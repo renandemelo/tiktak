@@ -5,34 +5,42 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class Api {
+	private Log log;
+	private File arquivo;
 	
+	public Api(String sistema){
+		log = new Log(sistema);
+		try {
+			this.arquivo = criarArquivo(sistema);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 	
-	public static void registrarEvento(String sistema, String usuario, String evento){
-		Log log = new Log(sistema);
+	public void registrarEvento(String usuario, String evento){
 		log.registrarEvento(usuario, evento);
 		
 		String json = GsonFactory.getGson().toJson(log) + "\n";
 		
         try {
-            File arquivo = criarArquivo(sistema);
-            RandomAccessFile raf = new RandomAccessFile(arquivo,"rw");
+            RandomAccessFile raf = new RandomAccessFile(this.arquivo,"rw");
             raf.readLine();
             boolean estaVazio = raf.readLine().equals("]");
-            if(estaVazio){
-            	raf.seek(2);
-            	raf.write(json.getBytes());
-            } else {
-            	raf.seek(raf.length() - 2);
-            	raf.write((",\n" + json).getBytes());
-            }
-            raf.write("]".getBytes());
+//            if(estaVazio){
+//            	raf.seek(2);
+//            	raf.write(json.getBytes());
+//            } else {
+            raf.seek(raf.length() - 4);
+            raf.write(("," + json).getBytes());
+//            }
+            raf.write("\n]\n}".getBytes());
             raf.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 	}
 
-	private static File criarArquivo(String sistema) throws IOException {
+	private File criarArquivo(String sistema) throws IOException {
 		
 		File pasta = new File("../tiktakBD");
 		if(!pasta.exists()){
