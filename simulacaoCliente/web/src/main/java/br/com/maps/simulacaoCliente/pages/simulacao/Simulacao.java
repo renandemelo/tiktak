@@ -30,7 +30,7 @@ public class Simulacao extends Template{
 		form.add(new Button("ok"){
 			@Override
 			public void onSubmit() {
-				Api.registrarEvento(usuario, funcionalidade);
+			//	Api.registrarEvento(usuario, funcionalidade);
 				super.onSubmit();
 			}
 		});
