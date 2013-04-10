@@ -26,15 +26,14 @@ public class testAPI {
 		String sistema = "API-Teste";
 		String usuario = "Albert e Renato";
 		String funcionalidade = "testPrimeiroEvento()";
-		Api api = new Api(sistema);
 
 		File file = new File("../tiktakBD/tik.tak");
 		if (file.exists()) {
 			file.delete();
 		}
 		Date antes = new Date(System.currentTimeMillis() - 1);
-		api.registrarEvento(usuario, funcionalidade);
-		api.registrarEvento(usuario, funcionalidade);
+		Api.registrarEvento(usuario, funcionalidade);
+		Api.registrarEvento(usuario, funcionalidade);
 		Date depois = new Date(System.currentTimeMillis() + 1);
 		FileReader reader = new FileReader(file);
 		List<Evento> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Evento>>() {
