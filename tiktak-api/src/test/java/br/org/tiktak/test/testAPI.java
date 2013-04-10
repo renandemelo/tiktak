@@ -28,13 +28,12 @@ public class testAPI {
 		String funcionalidade = "testPrimeiroEvento()";
 		Api api = new Api(sistema);
 
-		File file = new File("../tiktak/tik.tak");
+		File file = new File("../tiktakBD/tik.tak");
 		if (file.exists()) {
 			file.delete();
 		}
 		Date antes = new Date(System.currentTimeMillis() - 1);
 		api.registrarEvento(usuario, funcionalidade);
-
 		api.registrarEvento(usuario, funcionalidade);
 		Date depois = new Date(System.currentTimeMillis() + 1);
 		FileReader reader = new FileReader(file);
