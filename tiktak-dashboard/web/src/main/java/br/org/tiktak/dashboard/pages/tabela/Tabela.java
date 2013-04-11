@@ -6,6 +6,7 @@ import java.util.List;
 import jmine.tec.web.wicket.pages.Template;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -29,8 +30,9 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
+		Form<Void> form = new Form<Void>("Form");
 		FileUploadField fileUploadField = new FileUploadField("upload");
-		this.add(fileUploadField);
+		form.add(fileUploadField);
 		preencheListaFake();
 		ListView<BDfuncionalidades> listView = new ListView<BDfuncionalidades>("lvFuncionalidades") {
 
@@ -44,7 +46,8 @@ public class Tabela extends Template {
 		};
 		
 		listView.setList(funcionalidades);
-		this.add(listView);
+		form.add(listView);
+		this.add(form);
 	}
 	
 	private void preencheListaFake(){
