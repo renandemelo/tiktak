@@ -1,20 +1,21 @@
 package br.org.tiktak.dashboard.pages.tabela;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jmine.tec.web.wicket.pages.Template;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.PropertyModel;
 
 import bancosys.tec.exception.MessageCreator;
-import br.org.tiktak.core.Api;
+import br.org.tiktak.core.Evento;
 
 public class Tabela extends Template {
 
 	String usuario;
 	String funcionalidade;
+
+	List<Evento> tabela = new ArrayList<Evento>();
 
 	@Override
 	protected MessageCreator getHelpTextCreator() {
@@ -25,9 +26,11 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		add(new Label("funcionalidade","Tela 1"));
-		add(new Label("quantidade","1000"));
-		add(new Label("porcentagem","100%"));
+		tabela.add(new Evento("Astolfo", "Tela 1"));
+		for (Evento e : tabela) {
+			add(new Label("funcionalidade", e.getFuncionalidade()));
+			add(new Label("quantidade", "1"));
+			add(new Label("porcentagem", "100%"));
+		}
 	}
 }
-
