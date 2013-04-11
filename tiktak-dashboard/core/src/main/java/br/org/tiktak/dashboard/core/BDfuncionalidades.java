@@ -1,11 +1,13 @@
 package br.org.tiktak.dashboard.core;
 
-public class BDfuncionalidades {
+import java.io.Serializable;
+
+public class BDfuncionalidades implements Serializable {
 	private String funcionalidade;
 	private int quantidade;
 	private double porcentagem;
 	
-	public BDfuncionalidades(String funcionalidade, int quantidade, int porcentagem) {
+	public BDfuncionalidades(String funcionalidade, int quantidade, double porcentagem) {
 		this.funcionalidade = funcionalidade;
 		this.quantidade = quantidade;
 		this.porcentagem = porcentagem; 
