@@ -1,4 +1,4 @@
-package br.com.maps.simulacaoCliente.pages.simulacao;
+package br.org.tiktak.dashboard.pages.tabela;
 
 import jmine.tec.web.wicket.pages.Template;
 
@@ -10,7 +10,7 @@ import org.apache.wicket.model.PropertyModel;
 import bancosys.tec.exception.MessageCreator;
 import br.org.tiktak.core.Api;
 
-public class Simulacao extends Template {
+public class Tabela extends Template {
 
 	String usuario;
 	String funcionalidade;
