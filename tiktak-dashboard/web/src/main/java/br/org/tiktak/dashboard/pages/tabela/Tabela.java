@@ -6,6 +6,7 @@ import java.util.List;
 import jmine.tec.web.wicket.pages.Template;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -30,9 +31,17 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		Form<Void> form = new Form<Void>("Form");
-		FileUploadField fileUploadField = new FileUploadField("upload");
+		Form<Void> form = new Form<Void>("form");
+		final FileUploadField fileUploadField = new FileUploadField("upload");
 		form.add(fileUploadField);
+		Button button = new Button("botao"){
+			@Override
+			public void onSubmit() {
+				super.onSubmit();
+				System.out.println(fileUploadField.getFileUpload().getClientFileName());
+			}
+		};
+		form.add(button);
 		preencheListaFake();
 		ListView<BDfuncionalidades> listView = new ListView<BDfuncionalidades>("lvFuncionalidades") {
 
