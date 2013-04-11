@@ -24,16 +24,5 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		Form<Object> form = new Form<Object>("form");
-		add(form);
-		form.add(new TextField<String>("txt_usuario", new PropertyModel<String>(this, "usuario")));
-		form.add(new TextField<String>("txt_funcionalidade", new PropertyModel<String>(this, "funcionalidade")));
-		form.add(new Button("ok") {
-			@Override
-			public void onSubmit() {
-				Api.registrarEvento(usuario, funcionalidade);
-				super.onSubmit();
-			}
-		});
 	}
 }

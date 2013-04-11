@@ -6,17 +6,18 @@
 
 <body>
     <wicket:extend>
-    	<form wicket:id="form">
-	    	<div>
-	    		<label>Usuário:</label><input type="text" size="30" class="texto" wicket:id="txt_usuario"/>
-	    	</div>
-	    	<div>    	    	
-	    		<label>Funcionalidade: </label><input type="text" size="30" wicket:id="txt_funcionalidade" />
-	    	</div>
-	    	<div>
-	    		<input type="submit" wicket:id="ok" value="Enviar"/>
-	    	</div>
-	    </form>
+		<table>
+		  <tr>
+		    <td>Funcionalidade</td>
+		    <td>Quantidade</td>
+		    <td>Porcentagem</td>
+		  </tr>
+		  <tr>
+		    <td><span>Tela 1</span></td>
+		    <td><span>8000</span></td>
+		    <td><span>100%</span></td>
+		  </tr>
+		</table>
     </wicket:extend>
 </body>
 </html>
