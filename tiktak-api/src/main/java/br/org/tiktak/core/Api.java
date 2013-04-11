@@ -6,7 +6,7 @@ import java.io.RandomAccessFile;
 
 public class Api {
 
-	public static void registrarEvento(final String usuario, final String evento) {
+	public static void registrarEvento(String usuario, String evento) {
 		Evento dados = new Evento(usuario, evento);
 
 		String json = GsonFactory.getGson().toJson(dados) + "\n";
