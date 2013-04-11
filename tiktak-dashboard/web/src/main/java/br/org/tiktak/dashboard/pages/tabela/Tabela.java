@@ -2,6 +2,7 @@ package br.org.tiktak.dashboard.pages.tabela;
 
 import jmine.tec.web.wicket.pages.Template;
 
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -24,5 +25,9 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
+		add(new Label("funcionalidade","Tela 1"));
+		add(new Label("quantidade","1000"));
+		add(new Label("porcentagem","100%"));
 	}
 }
+
