@@ -1,5 +1,9 @@
 package br.org.tiktak.dashboard.pages.tabela;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +12,17 @@ import jmine.tec.web.wicket.pages.Template;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 
 import bancosys.tec.exception.MessageCreator;
+import br.org.tiktak.core.Evento;
+import br.org.tiktak.core.GsonFactory;
 import br.org.tiktak.dashboard.core.BDfuncionalidades;
+
+import com.google.gson.reflect.TypeToken;
 
 public class Tabela extends Template {
 
@@ -38,7 +47,17 @@ public class Tabela extends Template {
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
-				System.out.println(fileUploadField.getFileUpload().getClientFileName());
+				FileUpload fileUpload = fileUploadField.getFileUpload();
+				if(fileUpload == null){
+					warn("é necessário fornecer o arquivo");
+				}
+				else{
+					try {
+						processarArquivo(fileUpload);
+					} catch (IOException e) {
+						error("erro ao importar arquivo: "+e.getMessage());
+					}
+				}
 			}
 		};
 		form.add(button);
@@ -57,6 +76,15 @@ public class Tabela extends Template {
 		listView.setList(funcionalidades);
 		form.add(listView);
 		this.add(form);
+	}
+	
+	private void processarArquivo(FileUpload file) throws IOException{
+		FileReader reader = new FileReader(file.writeToTempFile());
+		List<Evento> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Evento>>() {
+		}.getType());
+		for (Evento evento : lista) {
+			System.out.println(evento.getFuncionalidade());
+		}
 	}
 	
 	private void preencheListaFake(){

@@ -1,6 +1,6 @@
 [
-{"uuid":"bbddd8d1-6772-3929-84a0-37df38f9d5e2","usuario":"WALLACE","evento":"CADASTRO DE CLIENTES"}, 
-{"uuid":"30aeeb35-1cd7-31c4-aaa1-fc14704362a1","usuario":"RENAN","evento":"ALTERACAO DE CLIENTES"},
-{"uuid":"bbddd8d1-6772-3929-84a0-37df38f9d5e3","usuario":"WALLACE","evento":"CADASTRO DE CLIENTES"},
-{"uuid":"e55372cc-0f1b-37e8-a86e-8ef27b2aa256","usuario":"ROBERTO","evento":"TESTANDO"}
+{"uuid":"bbddd8d1-6772-3929-84a0-37df38f9d5e2","usuario":"WALLACE","funcionalidade":"CADASTRO DE CLIENTES"}, 
+{"uuid":"30aeeb35-1cd7-31c4-aaa1-fc14704362a1","usuario":"RENAN","funcionalidade":"ALTERACAO DE CLIENTES"},
+{"uuid":"bbddd8d1-6772-3929-84a0-37df38f9d5e3","usuario":"WALLACE","funcionalidade":"CADASTRO DE CLIENTES"},
+{"uuid":"e55372cc-0f1b-37e8-a86e-8ef27b2aa256","usuario":"ROBERTO","funcionalidade":"TESTANDO"}
 ]
