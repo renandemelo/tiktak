@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import jmine.tec.web.wicket.pages.Template;
 
@@ -29,6 +31,9 @@ import com.google.gson.reflect.TypeToken;
 public class Tabela extends Template {
 
 	List<BDfuncionalidades> listaFuncionalidades = new ArrayList<BDfuncionalidades>();
+	Set<UUID> listaDeIds = new HashSet<UUID>();
+	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
+	Integer totalDeEventos = 0;
 
 	@Override
 	protected MessageCreator getHelpTextCreator() {
@@ -80,14 +85,16 @@ public class Tabela extends Template {
 		FileReader reader = new FileReader(file.writeToTempFile());
 		List<Evento> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Evento>>() {
 		}.getType());
-		HashMap<String, Integer> mapa = new HashMap<String, Integer>();
-		Integer totalDeEventos = 0;
 		for (Evento evento : lista) {
-			totalDeEventos++;
-			String funcionalidade = evento.getFuncionalidade();
-			int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
-			mapa.put(funcionalidade, count + 1);
+			if(!listaDeIds.contains(evento.getUuid())) {
+				listaDeIds.add(evento.getUuid());
+				totalDeEventos++;
+				String funcionalidade = evento.getFuncionalidade();
+				int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
+				mapa.put(funcionalidade, count + 1);
+			}
 		}
+		listaFuncionalidades.clear();
         Set<String> setFuncionalidades = mapa.keySet();  
         for (String f : setFuncionalidades) {  
         	Integer quantidade = mapa.get(f);
