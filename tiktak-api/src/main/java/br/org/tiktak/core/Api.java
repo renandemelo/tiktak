@@ -45,4 +45,20 @@ public class Api {
 		}
 		return arquivo;
 	}
+	
+	private static File criarArquivo2() throws IOException {
+
+		File pasta = new File("../tiktakBD");
+		if (!pasta.exists()) {
+			pasta.mkdir();
+		}
+		File arquivo = new File("../tiktakBD/tik2.tak");
+		if (!arquivo.exists()) {
+			arquivo.createNewFile();
+			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
+			writer.write("{\n}".getBytes());
+			writer.close();
+		}
+		return arquivo;
+	}
 }
