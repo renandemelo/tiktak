@@ -15,14 +15,21 @@ public class Api {
 			File arquivo = criarArquivo();
 			RandomAccessFile raf = new RandomAccessFile(arquivo, "rw");
 			raf.readLine();
-			boolean estaVazio = raf.readLine().equals("]");
-			if (estaVazio) {
+			char c = raf.readLine().charAt(0);  
+			boolean estaVazio1 = c == ']';
+			boolean estaVazio2 = c == '}';
+			if (estaVazio1) {
 				raf.seek(2);
 				raf.write(json.getBytes());
 			} else {
 				raf.seek(raf.length() - 2);
 				raf.write((",\n" + json).getBytes());
 			}
+			
+			if (estaVazio2) {
+			} else {
+			}
+			
 			raf.write("]".getBytes());
 			raf.close();
 		} catch (IOException e) {
