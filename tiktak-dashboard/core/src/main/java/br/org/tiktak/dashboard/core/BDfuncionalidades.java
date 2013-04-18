@@ -5,20 +5,16 @@ import java.io.Serializable;
 public class BDfuncionalidades implements Serializable {
 	private String funcionalidade;
 	private int quantidade;
-	private double porcentagem;
+	private String porcentagemFormatada;
 	
-	public BDfuncionalidades(String funcionalidade, int quantidade, double porcentagem) {
+	public BDfuncionalidades(String funcionalidade, int quantidade, String porcentagemFormatada) {
 		this.funcionalidade = funcionalidade;
 		this.quantidade = quantidade;
-		this.porcentagem = porcentagem; 
+		this.porcentagemFormatada = porcentagemFormatada; 
 	}
 	
-	public double getPorcetagem() {
-		return porcentagem;
-	}
-
-	public void setPorcetagem(double porcetagem) {
-		this.porcentagem = porcetagem;
+	public String getPorcetagem() {
+		return porcentagemFormatada;
 	}
 
 	public int getQuantidade() {
