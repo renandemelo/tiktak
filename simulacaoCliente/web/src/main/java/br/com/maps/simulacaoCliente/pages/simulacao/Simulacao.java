@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 
 import bancosys.tec.exception.MessageCreator;
-import br.org.tiktak.core.Api;
+import br.org.tiktak.core.TikTak;
 
 public class Simulacao extends Template {
 
@@ -31,7 +31,7 @@ public class Simulacao extends Template {
 		form.add(new Button("ok") {
 			@Override
 			public void onSubmit() {
-				Api.registrarEvento(usuario, funcionalidade);
+				TikTak.log(usuario, funcionalidade);
 				super.onSubmit();
 			}
 		});

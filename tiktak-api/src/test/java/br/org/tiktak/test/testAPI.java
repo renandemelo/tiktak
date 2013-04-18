@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.org.tiktak.core.Api;
+import br.org.tiktak.core.TikTak;
 import br.org.tiktak.core.Evento;
 import br.org.tiktak.core.GsonFactory;
 
@@ -22,7 +22,7 @@ public class testAPI {
 
 	@Test
 	public void testPrimeiroEvento() throws FileNotFoundException {
-
+		TikTak tiktak = new TikTak();
 		String sistema = "API-Teste";
 		String usuario = "Albert e Renato";
 		String funcionalidade = "testPrimeiroEvento()";
@@ -32,8 +32,8 @@ public class testAPI {
 			file.delete();
 		}
 		Date antes = new Date(System.currentTimeMillis() - 1);
-		Api.registrarEvento(usuario, funcionalidade);
-		Api.registrarEvento(usuario, funcionalidade);
+		tiktak.log(usuario, funcionalidade);
+		tiktak.log(usuario, funcionalidade);
 		Date depois = new Date(System.currentTimeMillis() + 1);
 		FileReader reader = new FileReader(file);
 		List<Evento> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Evento>>() {

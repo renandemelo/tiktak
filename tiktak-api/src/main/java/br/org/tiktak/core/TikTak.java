@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class Api {
+public class TikTak {
 
-	public static void registrarEvento(String usuario, String evento) {
+	public void log(String usuario, String evento) {
 		Evento dados = new Evento(usuario, evento);
 
 		String json = GsonFactory.getGson().toJson(dados) + "\n";

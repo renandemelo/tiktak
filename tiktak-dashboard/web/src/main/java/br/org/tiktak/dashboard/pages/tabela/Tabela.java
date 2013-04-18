@@ -88,7 +88,6 @@ public class Tabela extends Template {
 			@Override
 			protected void populateItem(ListItem<BDfuncionalidades> item) {
 				item.add(new Label("funcionalidade", item.getModelObject().getFuncionalidade()));				
-				//FIXME
 				item.add(new Label("quantidade", item.getModelObject().getQuantidade() + ""));				
 				item.add(new Label("porcentagem", item.getModelObject().getPorcetagem() + "%"));				
 			}
