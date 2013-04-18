@@ -13,6 +13,8 @@ import java.util.UUID;
 
 import jmine.tec.web.wicket.pages.Template;
 
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -20,6 +22,8 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.Model;
+import org.springframework.web.util.JavaScriptUtils;
 
 import bancosys.tec.exception.MessageCreator;
 import br.org.tiktak.core.Evento;
@@ -45,6 +49,11 @@ public class Tabela extends Template {
 	protected void onInitialize() {
 		super.onInitialize();
 		Form<Void> form = new Form<Void>("form");
+		//FIXME
+		Label label = new Label("dados","[['Mushrooms', 3],['Onions', 1],['Olives', 1],['Zucchini', 1],['Pepperoni', 2]]");
+		label.setEscapeModelStrings(false);
+		form.add(label);
+		
 		final FileUploadField fileUploadField = new FileUploadField("upload");
 		form.add(fileUploadField);
 		Button button = new Button("botao"){
