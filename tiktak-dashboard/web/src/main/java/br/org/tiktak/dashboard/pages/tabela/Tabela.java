@@ -38,6 +38,9 @@ public class Tabela extends Template {
 	Set<UUID> listaDeIds = new HashSet<UUID>();
 	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
 	Integer totalDeEventos = 0;
+	String json = "[";
+	Label label;
+	Form<Void> form = new Form<Void>("form");
 
 	@Override
 	protected MessageCreator getHelpTextCreator() {
@@ -48,14 +51,16 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		Form<Void> form = new Form<Void>("form");
-		//FIXME
-		Label label = new Label("dados","[['Mushrooms', 3],['Onions', 1],['Olives', 1],['Zucchini', 1],['Pepperoni', 2]]");
-		label.setEscapeModelStrings(false);
-		form.add(label);
+
 		
 		final FileUploadField fileUploadField = new FileUploadField("upload");
 		form.add(fileUploadField);
+		//FIXME
+		label = new Label("dados");
+		label.setEscapeModelStrings(false);
+		form.add(label);
+		
+		
 		Button button = new Button("botao"){
 			@Override
 			public void onSubmit() {
@@ -67,6 +72,10 @@ public class Tabela extends Template {
 				else{
 					try {
 						processarArquivo(fileUpload);
+						form.remove(label);
+						label = new Label("dados",json);
+						label.setEscapeModelStrings(false);
+						form.add(label);
 					} catch (IOException e) {
 						error("erro ao importar arquivo: "+e.getMessage());
 					}
@@ -104,12 +113,17 @@ public class Tabela extends Template {
 			}
 		}
 		listaFuncionalidades.clear();
-        Set<String> setFuncionalidades = mapa.keySet();  
+        Set<String> setFuncionalidades = mapa.keySet(); 
+        boolean naoPrimeiraLinha = false ;
         for (String f : setFuncionalidades) {  
         	Integer quantidade = mapa.get(f);
         	Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
             BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagem );
-            listaFuncionalidades.add(bdfuncionalidade);            
+            listaFuncionalidades.add(bdfuncionalidade);  
+            if(naoPrimeiraLinha) this.json += ", ";
+            this.json += "['" + f + "', " + quantidade + "]";
+			naoPrimeiraLinha = true;
         }
+        this.json += "]";
 	}	
 }

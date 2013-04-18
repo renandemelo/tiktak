@@ -27,7 +27,7 @@
 				</font>
 			</center>
 			
-			<span style="display:none" id="dados" wicket:id="dados"></span>
+			<span style="display:none" id="dadosx" wicket:id="dados"></span>
 		</form>
 		
 		<!--Div that will hold the pie chart-->
@@ -36,6 +36,9 @@
 	    <!--Load the AJAX API-->
 	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	    <script type="text/javascript">
+	
+		 var dadosx = document.getElementById("dadosx").innerText;
+		 if(dadosx){
 	
 	      // Load the Visualization API and the piechart package.
 	      google.load('visualization', '1.0', {'packages':['corechart']});
@@ -52,8 +55,8 @@
 	        var data = new google.visualization.DataTable();
 	        data.addColumn('string', 'Topping');
 	        data.addColumn('number', 'Slices');
-	        data.addRows(eval(document.getElementById("dados").innerText));
-	
+	        
+	        data.addRows(eval(dadosx));	
 	        // Set chart options
 	        var options = {'title':'Quantidade de Funcionalidade',
 	                       'width':400,
@@ -62,6 +65,7 @@
 	        // Instantiate and draw our chart, passing in some options.
 	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 	        chart.draw(data, options);
+	      }
 	      }
 	    </script>
     </wicket:extend>
