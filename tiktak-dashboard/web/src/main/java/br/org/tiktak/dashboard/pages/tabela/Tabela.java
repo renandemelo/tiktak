@@ -38,7 +38,7 @@ public class Tabela extends Template {
 	Set<UUID> listaDeIds = new HashSet<UUID>();
 	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
 	Integer totalDeEventos = 0;
-	String json = "[";
+	String json = "";
 	Label label;
 	Form<Void> form = new Form<Void>("form");
 
@@ -115,6 +115,7 @@ public class Tabela extends Template {
 		listaFuncionalidades.clear();
         Set<String> setFuncionalidades = mapa.keySet(); 
         boolean naoPrimeiraLinha = false ;
+        json = "[";
         for (String f : setFuncionalidades) {  
         	Integer quantidade = mapa.get(f);
         	Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
