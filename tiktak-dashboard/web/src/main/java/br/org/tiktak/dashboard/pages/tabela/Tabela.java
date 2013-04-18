@@ -88,6 +88,7 @@ public class Tabela extends Template {
 			@Override
 			protected void populateItem(ListItem<BDfuncionalidades> item) {
 				item.add(new Label("funcionalidade", item.getModelObject().getFuncionalidade()));				
+				//FIXME
 				item.add(new Label("quantidade", item.getModelObject().getQuantidade() + ""));				
 				item.add(new Label("porcentagem", item.getModelObject().getPorcetagem() + "%"));				
 			}
@@ -118,11 +119,13 @@ public class Tabela extends Template {
         for (String f : setFuncionalidades) {  
         	Integer quantidade = mapa.get(f);
         	Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
-            BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagem );
+        	String porcentagemFormatada = String.format("%.2f", porcentagem);
+            BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagemFormatada);
             listaFuncionalidades.add(bdfuncionalidade);  
             if(naoPrimeiraLinha) this.json += ", ";
             this.json += "['" + f + "', " + quantidade + "]";
 			naoPrimeiraLinha = true;
+
         }
         this.json += "]";
 	}	
