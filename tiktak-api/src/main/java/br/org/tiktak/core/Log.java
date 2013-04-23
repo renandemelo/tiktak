@@ -3,24 +3,24 @@ package br.org.tiktak.core;
 import java.util.ArrayList;
 
 public class Log {
-	private final String sistema;
-	private final ArrayList<Evento> eventos;
+	private final String system;
+	private final ArrayList<Event> events;
 
-	public String getSistema() {
-		return sistema;
+	public String getSystem() {
+		return system;
 	}
 
-	public ArrayList<Evento> getEventos() {
-		return eventos;
+	public ArrayList<Event> getEvent() {
+		return events;
 	}
 
-	public Log(final String sistema) {
-		this.sistema = sistema;
-		this.eventos = new ArrayList<Evento>();
+	public Log(final String system) {
+		this.system = system;
+		this.events = new ArrayList<Event>();
 	}
 
-	public void registrarEvento(final String usuario, final String funcionalidade) {
-		Evento evento = new Evento(usuario, funcionalidade);
-		this.eventos.add(evento);
+	public void log(final String user, final String funcionality) {
+		Event event = new Event(user, funcionality);
+		this.events.add(event);
 	}
 }

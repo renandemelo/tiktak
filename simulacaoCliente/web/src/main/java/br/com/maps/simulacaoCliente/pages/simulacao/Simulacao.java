@@ -24,6 +24,7 @@ public class Simulacao extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
+		
 		Form<Object> form = new Form<Object>("form");
 		add(form);
 		form.add(new TextField<String>("txt_usuario", new PropertyModel<String>(this, "usuario")));
@@ -31,7 +32,8 @@ public class Simulacao extends Template {
 		form.add(new Button("ok") {
 			@Override
 			public void onSubmit() {
-				TikTak.log(usuario, funcionalidade);
+				TikTak tiktak = new TikTak();
+				tiktak.log(usuario, funcionalidade);
 				super.onSubmit();
 			}
 		});

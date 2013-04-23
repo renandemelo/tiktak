@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 
-import br.org.tiktak.core.Evento;
+import br.org.tiktak.core.Event;
 import br.org.tiktak.core.GsonFactory;
 
 import com.google.gson.reflect.TypeToken;
@@ -25,8 +25,8 @@ public class Core {
 		return this.funcionalidade;
 	}
 
-	public List<Evento> lerArquivo(final FileReader arquivo) {
-		List<Evento> lista = GsonFactory.getGson().fromJson(arquivo, new TypeToken<List<Evento>>() {
+	public List<Event> lerArquivo(final FileReader arquivo) {
+		List<Event> lista = GsonFactory.getGson().fromJson(arquivo, new TypeToken<List<Event>>() {
 		}.getType());
 
 		return lista;

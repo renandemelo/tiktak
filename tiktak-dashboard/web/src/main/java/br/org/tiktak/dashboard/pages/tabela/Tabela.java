@@ -26,7 +26,7 @@ import org.apache.wicket.model.Model;
 import org.springframework.web.util.JavaScriptUtils;
 
 import bancosys.tec.exception.MessageCreator;
-import br.org.tiktak.core.Evento;
+import br.org.tiktak.core.Event;
 import br.org.tiktak.core.GsonFactory;
 import br.org.tiktak.dashboard.core.BDfuncionalidades;
 
@@ -101,13 +101,13 @@ public class Tabela extends Template {
 	
 	private void processarArquivo(FileUpload file) throws IOException{
 		FileReader reader = new FileReader(file.writeToTempFile());
-		List<Evento> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Evento>>() {
+		List<Event> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Event>>() {
 		}.getType());
-		for (Evento evento : lista) {
+		for (Event evento : lista) {
 			if(!listaDeIds.contains(evento.getUuid())) {
 				listaDeIds.add(evento.getUuid());
 				totalDeEventos++;
-				String funcionalidade = evento.getFuncionalidade();
+				String funcionalidade = evento.getFuncionality();
 				int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
 				mapa.put(funcionalidade, count + 1);
 			}

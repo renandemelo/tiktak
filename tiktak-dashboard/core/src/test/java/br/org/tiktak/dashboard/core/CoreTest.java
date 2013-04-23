@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.org.tiktak.core.Evento;
+import br.org.tiktak.core.Event;
 
 public class CoreTest {
 
@@ -16,9 +16,9 @@ public class CoreTest {
 	public void testeLerArquivo() throws FileNotFoundException {
 		Core core = new Core();
 		FileReader arquivo = new FileReader("../../modeloDeArquivo/tik.tak");
-		List<Evento> listaEventos = core.lerArquivo(arquivo);
+		List<Event> listaEventos = core.lerArquivo(arquivo);
 
-		assertEquals("ROBERTO", listaEventos.get(3).getUsuario());
+		assertEquals("ROBERTO", listaEventos.get(3).getUser());
 	}
 
 }

@@ -7,27 +7,22 @@ import java.io.RandomAccessFile;
 public class TikTak {
 
 	public void log(String usuario, String evento) {
-		Evento dados = new Evento(usuario, evento);
+		Event dados = new Event(usuario, evento);
 
 		String json = GsonFactory.getGson().toJson(dados) + "\n";
 
 		try {
-			File arquivo = criarArquivo();
+			File arquivo = createLoggerVersion1();
 			RandomAccessFile raf = new RandomAccessFile(arquivo, "rw");
 			raf.readLine();
 			char c = raf.readLine().charAt(0);  
 			boolean estaVazio1 = c == ']';
-			boolean estaVazio2 = c == '}';
 			if (estaVazio1) {
 				raf.seek(2);
 				raf.write(json.getBytes());
 			} else {
 				raf.seek(raf.length() - 2);
 				raf.write((",\n" + json).getBytes());
-			}
-			
-			if (estaVazio2) {
-			} else {
 			}
 			
 			raf.write("]".getBytes());
@@ -37,7 +32,7 @@ public class TikTak {
 		}
 	}
 
-	private static File criarArquivo() throws IOException {
+	private File createLoggerVersion1() throws IOException {
 
 		File pasta = new File("../tiktakBD");
 		if (!pasta.exists()) {
@@ -53,7 +48,7 @@ public class TikTak {
 		return arquivo;
 	}
 	
-	private static File criarArquivo2() throws IOException {
+	private File createLoggerVersion2() throws IOException {
 
 		File pasta = new File("../tiktakBD");
 		if (!pasta.exists()) {
