@@ -34,11 +34,7 @@ public class TikTak {
 
 	private File createLoggerVersion1() throws IOException {
 
-		File pasta = new File("../tiktakBD");
-		if (!pasta.exists()) {
-			pasta.mkdir();
-		}
-		File arquivo = new File("../tiktakBD/tik.tak");
+		File arquivo = new File("tik.tak");
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
