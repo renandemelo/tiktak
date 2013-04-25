@@ -19,8 +19,8 @@ public class Log {
 		this.events = new ArrayList<Event>();
 	}
 
-	public void log(final String user, final String funcionality) {
-		Event event = new Event(user, funcionality);
+	public void log(final String system, final String user, final String funcionality) {
+		Event event = new Event(system, user, funcionality);
 		this.events.add(event);
 	}
 }

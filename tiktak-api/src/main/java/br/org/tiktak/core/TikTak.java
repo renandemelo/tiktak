@@ -5,14 +5,23 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class TikTak {
+	String dir;
 
-	public void log(String usuario, String evento) {
-		Event dados = new Event(usuario, evento);
+	public TikTak(){
+		dir = null;
+	}
+	
+	public void setDir(String dir) {
+		this.dir = dir;
+	}
+	
+	public void log(String sistema, String usuario, String evento) {
+		Event dados = new Event(sistema, usuario, evento);
 
 		String json = GsonFactory.getGson().toJson(dados) + "\n";
 
 		try {
-			File arquivo = createLoggerVersion1();
+			File arquivo = criarArquivoLogVersion1();
 			RandomAccessFile raf = new RandomAccessFile(arquivo, "rw");
 			raf.readLine();
 			char c = raf.readLine().charAt(0);  
@@ -32,9 +41,37 @@ public class TikTak {
 		}
 	}
 
-	private File createLoggerVersion1() throws IOException {
+	private String criarPastaLog() throws IOException {
+		String diretorio = "";
+		String parametroSetDir, parametroGetProperty;
+		
+		parametroSetDir = this.dir;
+		parametroGetProperty = System.getProperty("tiktak.dir");
+		if (parametroSetDir != null){
+			diretorio = parametroSetDir;
+		} else if (parametroGetProperty != null) {
+			diretorio = parametroGetProperty;
+		}
+		if ((diretorio != "") && (!diretorio.endsWith("/"))){
+			System.out.println("diretorio não é null! =D " + diretorio);
+			diretorio += "/";
+			
+			File diretorioFisico = new File(diretorio);
+			
+			if (!diretorioFisico.exists()) {
+				System.out.println("diretorio criado! o/");
+				diretorioFisico.mkdir();
+			}
+		}
+		return diretorio;
+	}
 
-		File arquivo = new File("tik.tak");
+	
+	private File criarArquivoLogVersion1() throws IOException {
+		String diretorio = criarPastaLog();
+		String caminhoDoArquivo = diretorio + "tik.tak";
+		
+		File arquivo = new File(caminhoDoArquivo);
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
@@ -44,7 +81,7 @@ public class TikTak {
 		return arquivo;
 	}
 	
-	private File createLoggerVersion2() throws IOException {
+	private File criarArquivoLogVersion2() throws IOException {
 
 		File pasta = new File("../tiktakBD");
 		if (!pasta.exists()) {
