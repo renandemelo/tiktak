@@ -6,8 +6,8 @@ import java.io.RandomAccessFile;
 
 public class TikTak {
 
-	public void log(String usuario, String evento) {
-		Event dados = new Event(usuario, evento);
+	public void log(String sistema, String usuario, String evento) {
+		Event dados = new Event(sistema, usuario, evento);
 
 		String json = GsonFactory.getGson().toJson(dados) + "\n";
 
