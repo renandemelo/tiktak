@@ -107,7 +107,7 @@ public class Tabela extends Template {
 			if(!listaDeIds.contains(evento.getUuid())) {
 				listaDeIds.add(evento.getUuid());
 				totalDeEventos++;
-				String funcionalidade = evento.getFuncionality();
+				String funcionalidade = evento.getFuncionalidade();
 				int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
 				mapa.put(funcionalidade, count + 1);
 			}

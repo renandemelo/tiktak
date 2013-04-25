@@ -5,16 +5,16 @@ import java.util.UUID;
 
 public class Event {
 	private UUID uuid;
-	private String user;
-	private String funcionality;
+	private String usuario;
+	private String funcionalidade;
 	private Date time;
 
-	public Event(String user, String funcionality){
+	public Event(String usuario, String funcionalidade){
 		this.time = new Date();
 		UUID uuid = UUID.randomUUID();		
 		this.uuid = uuid;
-		this.user = user;
-		this.funcionality = funcionality;
+		this.usuario = usuario;
+		this.funcionalidade = funcionalidade;
 	}
 	
 	public UUID getUuid() {
@@ -22,11 +22,11 @@ public class Event {
 	}
 	
 	public String getUser() {
-		return user;
+		return usuario;
 	}
 	
-	public String getFuncionality() {
-		return funcionality;
+	public String getFuncionalidade() {
+		return funcionalidade;
 	}
 
 	public Date getTime() {
