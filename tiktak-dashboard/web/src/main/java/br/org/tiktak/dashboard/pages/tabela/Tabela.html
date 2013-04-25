@@ -8,17 +8,19 @@
 <body>
     <wicket:extend>
     	<form wicket:id="form">
-	    	<input type="file" wicket:id="upload" size="40"/>
-	    	<br>
-	    	<input type="submit" wicket:id="botao" value="Subir arquivo"/>
+	    	<div style=" border: solid; border-color: #888888;">
+	    		<p>Escolha um arquivo tik.tak para visualizar os dados</p>
+	    	</div>
+	    	<p><input type="file" wicket:id="upload" size="40"/></p>
+	    	<p><input type="submit" wicket:id="botao" value="Subir arquivo"/></p>
 			
 			<span style="display:none" id="dadosx" wicket:id="dados"></span>
 			<span style="display:none" id="dadosT" wicket:id="dadosTabela"></span>
 			
 		</form>
-		
+		<br>
 		<div id='table_div'></div>
-		
+		<br>
 		<!--Div that will hold the pie chart-->
     	<div id="chart_div"></div>
     	
@@ -54,11 +56,10 @@
 	        // Instantiate and draw our chart, passing in some options.
 	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 	        chart.draw(data, options);
-	      }
-	      }
+	        }
+	     }
 	    </script>
 	    
-	    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
 	    <script type='text/javascript'>
 	      google.load('visualization', '1', {packages:['table']});
 	      google.setOnLoadCallback(drawTable);
