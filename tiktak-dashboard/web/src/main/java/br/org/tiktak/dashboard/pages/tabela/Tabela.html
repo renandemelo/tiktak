@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/" xml:lang="en" lang="en">
 
-<head></head>
+<head>	
+</head>
 
 <body>
     <wicket:extend>
@@ -10,25 +11,13 @@
 	    	<input type="file" wicket:id="upload" size="40"/>
 	    	<br>
 	    	<input type="submit" wicket:id="botao" value="Subir arquivo"/>
-	    	<center>
-		    	<font size="3">
-					<table border="1" cellpadding="10">
-					  <tr>
-					    <td>Funcionalidade</td>
-					    <td>Quantidade</td>
-					    <td>Porcentagem</td>
-					  </tr>
-					  <tr wicket:id="lvFuncionalidades">
-					    <td><span wicket:id="funcionalidade"></span></td>
-	    				<td><span wicket:id="quantidade"></span></td>
-	    				<td><span wicket:id="porcentagem"></span></td>
-					  </tr>
-					</table>
-				</font>
-			</center>
 			
 			<span style="display:none" id="dadosx" wicket:id="dados"></span>
+			<span style="display:none" id="dadosT" wicket:id="dadosTabela"></span>
+			
 		</form>
+		
+		<div id='table_div'></div>
 		
 		<!--Div that will hold the pie chart-->
     	<div id="chart_div"></div>
@@ -68,6 +57,24 @@
 	      }
 	      }
 	    </script>
+	    
+	    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	    <script type='text/javascript'>
+	      google.load('visualization', '1', {packages:['table']});
+	      google.setOnLoadCallback(drawTable);
+	      function drawTable() {
+	        var dadosTabela = document.getElementById("dadosT").innerText;
+	        var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Funcionalidade');
+	        data.addColumn('string', 'Quantidade');
+	        data.addColumn('string', 'Porcentagem');
+	        data.addRows(eval(dadosTabela));  
+	
+	        var table = new google.visualization.Table(document.getElementById('table_div'));
+	        table.draw(data, {showRowNumber: false});
+	      }
+	    </script>
+	    
     </wicket:extend>
 </body>
 </html>
