@@ -19,7 +19,7 @@ public class TesteAPI {
 
 	@Before
 	public void setUp() throws Exception {
-		this.tiktak = new TikTak();
+		this.tiktak = new TikTak("testes");
 	}
 	
 	public void setUsuario() {
@@ -37,32 +37,6 @@ public class TesteAPI {
 		tiktak.log(this.usuario, this.evento);
 
 		return carregarConteudoArquivo(arquivo);
-	}
-	
-	@Test
-	public void testeVerificarUsuarioPadrao() {
-		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao("tik.tak");
-		assertTrue(conteudoArquivo.contains(this.usuario));
-	}
-	
-	public void testeVerificarEventoPadrao() {
-		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao("tik.tak");
-		assertTrue(conteudoArquivo.contains(this.evento));
-	}
-
-	@Test
-	public void testeVerificarUsuarioEventoSetDir() {
-		setUsuario();
-		setEvento();
-
-		String conteudoArquivo;
-		String diretorio = "tiktakdir/";
-		tiktak.setDir(diretorio);
-		tiktak.log(this.usuario, this.evento);
-
-		System.out.println("path: " + diretorio + "tik.tak");
-		conteudoArquivo = carregarConteudoArquivo(diretorio + "tik.tak");
-		assertTrue(conteudoArquivo.contains(this.evento));
 	}
 	
 	private String carregarConteudoArquivo(String arquivo) {
@@ -84,5 +58,36 @@ public class TesteAPI {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testeVerificarUsuarioPadrao() {
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao("tik.tak");
+		assertTrue(conteudoArquivo.contains(this.usuario));
+	}
+	
+	@Test
+	public void testeVerificarEventoPadrao() {
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao("tik.tak");
+		assertTrue(conteudoArquivo.contains(this.evento));
+	}
+
+	@Test
+	public void testeVerificarUsuarioEventoSetDir() {
+		setUsuario();
+		setEvento();
+
+		String conteudoArquivo;
+		String diretorio = "tiktakdir";
+		System.out.println("SetDir: " + diretorio);
+		tiktak.setDir(diretorio);
+		System.out.println("log: " + diretorio + "tik.tak");
+		tiktak.log(this.usuario, this.evento);
+
+		System.out.println("path: " + diretorio + "tik.tak");
+		conteudoArquivo = carregarConteudoArquivo(diretorio + "tik.tak");
+		assertTrue(conteudoArquivo.contains(this.evento));
 	}
 }

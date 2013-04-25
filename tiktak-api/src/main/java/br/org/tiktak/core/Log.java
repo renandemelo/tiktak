@@ -20,7 +20,7 @@ public class Log {
 	}
 
 	public void log(final String system, final String user, final String funcionality) {
-		Event event = new Event(system, user, funcionality);
+		Event event = new Event(user, funcionality);
 		this.events.add(event);
 	}
 }

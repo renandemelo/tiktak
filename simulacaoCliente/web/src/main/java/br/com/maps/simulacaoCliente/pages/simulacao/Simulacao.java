@@ -34,8 +34,8 @@ public class Simulacao extends Template {
 		form.add(new Button("ok") {
 			@Override
 			public void onSubmit() {
-				TikTak tiktak = new TikTak();
-				tiktak.log(sistema, usuario, funcionalidade);
+				TikTak tiktak = new TikTak("Simulacao");
+				tiktak.log(usuario, funcionalidade);
 				super.onSubmit();
 			}
 		});
