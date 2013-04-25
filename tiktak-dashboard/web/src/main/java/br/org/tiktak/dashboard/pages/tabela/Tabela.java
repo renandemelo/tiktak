@@ -39,7 +39,9 @@ public class Tabela extends Template {
 	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
 	Integer totalDeEventos = 0;
 	String json = "";
+	String jsonTabela = "";
 	Label label;
+	Label label2;
 	Form<Void> form = new Form<Void>("form");
 
 	@Override
@@ -55,11 +57,14 @@ public class Tabela extends Template {
 		
 		final FileUploadField fileUploadField = new FileUploadField("upload");
 		form.add(fileUploadField);
-		//FIXME
+		//FIXME POG para inserir os dados da tabela
 		label = new Label("dados");
 		label.setEscapeModelStrings(false);
 		form.add(label);
 		
+		label2 = new Label("dadosTabela");
+		label2.setEscapeModelStrings(false);
+		form.add(label2);
 		
 		Button button = new Button("botao"){
 			@Override
@@ -76,6 +81,10 @@ public class Tabela extends Template {
 						label = new Label("dados",json);
 						label.setEscapeModelStrings(false);
 						form.add(label);
+						form.remove(label2);
+						label2 = new Label("dadosTabela",jsonTabela);
+						label2.setEscapeModelStrings(false);
+						form.add(label2);
 					} catch (IOException e) {
 						error("erro ao importar arquivo: "+e.getMessage());
 					}
@@ -116,17 +125,20 @@ public class Tabela extends Template {
         Set<String> setFuncionalidades = mapa.keySet(); 
         boolean naoPrimeiraLinha = false ;
         json = "[";
+        jsonTabela = "[";
         for (String f : setFuncionalidades) {  
         	Integer quantidade = mapa.get(f);
         	Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
         	String porcentagemFormatada = String.format("%.2f", porcentagem);
             BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagemFormatada);
             listaFuncionalidades.add(bdfuncionalidade);  
-            if(naoPrimeiraLinha) this.json += ", ";
+            if(naoPrimeiraLinha){ this.json += ", "; this.jsonTabela += ", "; }
             this.json += "['" + f + "', " + quantidade + "]";
+            this.jsonTabela += "['" + f + "', '" + quantidade + "', '" + porcentagemFormatada + "%']";
 			naoPrimeiraLinha = true;
 
         }
         this.json += "]";
+        this.jsonTabela += "]";
 	}	
 }
