@@ -33,8 +33,28 @@ public class TikTak {
 	}
 
 	private File createLoggerVersion1() throws IOException {
-
-		File arquivo = new File("tik.tak");
+		String diretorio = System.getProperty("tiktak.dir");
+		String caminhoDoArquivo;
+		
+		if(diretorio == null){
+			System.out.println("diretorio é null");
+			diretorio = "";
+		}
+		else if(!diretorio.endsWith("/")){
+			System.out.println("diretorio não é null! =D " + diretorio);
+			diretorio += "/";
+			
+			File diretorioFisico = new File(diretorio);
+			
+			if (!diretorioFisico.exists()) {
+				System.out.println("diretorio criado! o/");
+				diretorioFisico.mkdir();
+			}
+		}
+		
+		caminhoDoArquivo = diretorio + "tik.tak";
+		
+		File arquivo = new File(caminhoDoArquivo);
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
