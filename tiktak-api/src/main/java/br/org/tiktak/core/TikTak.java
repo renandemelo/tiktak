@@ -5,14 +5,23 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class TikTak {
+	String dir;
 
+	public TikTak(){
+		dir = null;
+	}
+	
+	public void setDir(String dir) {
+		this.dir = dir;
+	}
+	
 	public void log(String sistema, String usuario, String evento) {
 		Event dados = new Event(sistema, usuario, evento);
 
 		String json = GsonFactory.getGson().toJson(dados) + "\n";
 
 		try {
-			File arquivo = createLoggerVersion1();
+			File arquivo = criarArquivoLogVersion1();
 			RandomAccessFile raf = new RandomAccessFile(arquivo, "rw");
 			raf.readLine();
 			char c = raf.readLine().charAt(0);  
@@ -32,15 +41,18 @@ public class TikTak {
 		}
 	}
 
-	private File createLoggerVersion1() throws IOException {
-		String diretorio = System.getProperty("tiktak.dir");
-		String caminhoDoArquivo;
+	private String criarPastaLog() throws IOException {
+		String diretorio = "";
+		String parametroSetDir, parametroGetProperty;
 		
-		if(diretorio == null){
-			System.out.println("diretorio é null");
-			diretorio = "";
+		parametroSetDir = this.dir;
+		parametroGetProperty = System.getProperty("tiktak.dir");
+		if (parametroSetDir != null){
+			diretorio = parametroSetDir;
+		} else if (parametroGetProperty != null) {
+			diretorio = parametroGetProperty;
 		}
-		else if(!diretorio.endsWith("/")){
+		if ((diretorio != "") && (!diretorio.endsWith("/"))){
 			System.out.println("diretorio não é null! =D " + diretorio);
 			diretorio += "/";
 			
@@ -51,8 +63,13 @@ public class TikTak {
 				diretorioFisico.mkdir();
 			}
 		}
-		
-		caminhoDoArquivo = diretorio + "tik.tak";
+		return diretorio;
+	}
+
+	
+	private File criarArquivoLogVersion1() throws IOException {
+		String diretorio = criarPastaLog();
+		String caminhoDoArquivo = diretorio + "tik.tak";
 		
 		File arquivo = new File(caminhoDoArquivo);
 		if (!arquivo.exists()) {
@@ -64,7 +81,7 @@ public class TikTak {
 		return arquivo;
 	}
 	
-	private File createLoggerVersion2() throws IOException {
+	private File criarArquivoLogVersion2() throws IOException {
 
 		File pasta = new File("../tiktakBD");
 		if (!pasta.exists()) {
