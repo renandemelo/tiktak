@@ -92,19 +92,6 @@ public class Tabela extends Template {
 			}
 		};
 		form.add(button);
-		ListView<BDfuncionalidades> listView = new ListView<BDfuncionalidades>("lvFuncionalidades") {
-
-			@Override
-			protected void populateItem(ListItem<BDfuncionalidades> item) {
-				item.add(new Label("funcionalidade", item.getModelObject().getFuncionalidade()));				
-				item.add(new Label("quantidade", item.getModelObject().getQuantidade() + ""));				
-				item.add(new Label("porcentagem", item.getModelObject().getPorcetagem() + "%"));				
-			}
-			
-		};
-		
-		listView.setList(listaFuncionalidades);
-		form.add(listView);
 		this.add(form);
 	}
 	
