@@ -80,7 +80,7 @@ public class TesteAPI {
 		setEvento();
 
 		String conteudoArquivo;
-		String diretorio = "tiktakdir";
+		String diretorio = "tiktakdir/";
 		System.out.println("SetDir: " + diretorio);
 		tiktak.setDir(diretorio);
 		System.out.println("log: " + diretorio + "tik.tak");

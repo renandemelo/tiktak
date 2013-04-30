@@ -54,9 +54,10 @@ public class TikTak {
 		} else if (parametroGetProperty != null) {
 			diretorio = parametroGetProperty;
 		}
-		if ((diretorio != "") && (!diretorio.endsWith("/"))){
+		if (diretorio != "") {
 			System.out.println("diretorio não é null! =D " + diretorio);
-			diretorio += "/";
+			if (!diretorio.endsWith("/"))
+				diretorio += "/";
 			
 			File diretorioFisico = new File(diretorio);
 			
