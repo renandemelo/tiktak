@@ -3,6 +3,7 @@ package br.org.tiktak.testeAPI;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -60,34 +61,59 @@ public class TesteAPI {
 		return null;
 	}
 	
+	private void excluiArquivoCriadoParaTeste( String nomeArquivo) {
+		File arquivo = new File(nomeArquivo);
+		arquivo.delete();
+	}
+	
+	private void excluiDiretorioCriadoParaTeste( String nomeDiretorio) {
+		File diretorio = new File(nomeDiretorio);
+		String nomeDiretorioAbsoluto = diretorio.getAbsolutePath();
+		File diretorioAbsoluto= new File(nomeDiretorioAbsoluto);
+		for (File arquivo : diretorioAbsoluto.listFiles()) {
+			arquivo.delete();
+		}
+		if (diretorio.isDirectory())
+			diretorioAbsoluto.delete();
+		
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////
 	
 	@Test
 	public void testeVerificarUsuarioPadrao() {
-		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao("tik.tak");
+		String nomeDoArquivo = "tik.tak";
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao(nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.usuario));
+		excluiArquivoCriadoParaTeste( nomeDoArquivo);
 	}
 	
 	@Test
 	public void testeVerificarEventoPadrao() {
-		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao("tik.tak");
+		String nomeDoArquivo = "tik.tak";
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao(nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.evento));
+		excluiArquivoCriadoParaTeste( nomeDoArquivo);
 	}
 
 	@Test
 	public void testeVerificarUsuarioEventoSetDir() {
 		setUsuario();
 		setEvento();
-
-		String conteudoArquivo;
-		String diretorio = "tiktakdir/";
+		String nomeDoArquivo = "tik.tak";
+		String conteudoArquivo;		
+		String diretorio = "tiktakdir/";	
+		
 		System.out.println("SetDir: " + diretorio);
-		tiktak.setDir(diretorio);
-		System.out.println("log: " + diretorio + "tik.tak");
+		tiktak.setDir(diretorio);		
+		System.out.println("log: " + diretorio + nomeDoArquivo);
 		tiktak.log(this.usuario, this.evento);
-
-		System.out.println("path: " + diretorio + "tik.tak");
-		conteudoArquivo = carregarConteudoArquivo(diretorio + "tik.tak");
+		System.out.println("path: " + diretorio + nomeDoArquivo);
+		
+		conteudoArquivo = carregarConteudoArquivo(diretorio + nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.evento));
+		
+		excluiArquivoCriadoParaTeste( diretorio + nomeDoArquivo);
+		excluiDiretorioCriadoParaTeste(diretorio);		
 	}
 }
