@@ -14,6 +14,8 @@ public class TikTak {
 	}
 	
 	public void setDir(String dir) {
+		if (!dir.endsWith("/"))
+			dir += "/";
 		this.dir = dir;
 	}
 	
@@ -56,14 +58,12 @@ public class TikTak {
 		}
 		if (diretorio != "") {
 			System.out.println("diretorio não é null! =D " + diretorio);
-			if (!diretorio.endsWith("/"))
-				diretorio += "/";
 			
 			File diretorioFisico = new File(diretorio);
 			
 			if (!diretorioFisico.exists()) {
-				System.out.println("diretorio criado! o/");
 				diretorioFisico.mkdir();
+				System.out.println("diretorio criado! o/");
 			}
 		}
 		return diretorio;
@@ -72,10 +72,10 @@ public class TikTak {
 	private File criarArquivoLog() throws IOException {
 		criarPastaLog();
 		String caminhoDoArquivo;
-		if(this.dir == null){
+		if(this.dir == null) {
 			caminhoDoArquivo = "tik.tak";
-		}else{
-		caminhoDoArquivo = this.dir + "tik.tak";
+		} else {
+			caminhoDoArquivo = this.dir + "tik.tak";
 		}
 		File arquivo = new File(caminhoDoArquivo);
 		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
