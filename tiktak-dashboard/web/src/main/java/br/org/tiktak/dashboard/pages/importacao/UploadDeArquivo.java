@@ -1,9 +1,9 @@
 package br.org.tiktak.dashboard.pages.importacao;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,17 +13,10 @@ import java.util.UUID;
 
 import jmine.tec.web.wicket.pages.Template;
 
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.Model;
-import org.springframework.web.util.JavaScriptUtils;
 
 import bancosys.tec.exception.MessageCreator;
 import br.org.tiktak.core.Event;
@@ -38,10 +31,6 @@ public class UploadDeArquivo extends Template {
 	Set<UUID> listaDeIds = new HashSet<UUID>();
 	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
 	Integer totalDeEventos = 0;
-	String json = "";
-	String jsonTabela = "";
-	Label label;
-	Label label2;
 	Form<Void> form = new Form<Void>("form");
 
 	@Override
@@ -57,14 +46,6 @@ public class UploadDeArquivo extends Template {
 		
 		final FileUploadField fileUploadField = new FileUploadField("upload");
 		form.add(fileUploadField);
-		//FIXME POG para inserir os dados da tabela
-		label = new Label("dados");
-		label.setEscapeModelStrings(false);
-		form.add(label);
-		
-		label2 = new Label("dadosTabela");
-		label2.setEscapeModelStrings(false);
-		form.add(label2);
 		
 		Button button = new Button("botao"){
 			@Override
@@ -77,14 +58,6 @@ public class UploadDeArquivo extends Template {
 				else{
 					try {
 						processarArquivo(fileUpload);
-						form.remove(label);
-						label = new Label("dados",json);
-						label.setEscapeModelStrings(false);
-						form.add(label);
-						form.remove(label2);
-						label2 = new Label("dadosTabela",jsonTabela);
-						label2.setEscapeModelStrings(false);
-						form.add(label2);
 					} catch (IOException e) {
 						error("erro ao importar arquivo: "+e.getMessage());
 					}
@@ -96,36 +69,39 @@ public class UploadDeArquivo extends Template {
 	}
 	
 	private void processarArquivo(FileUpload file) throws IOException{
-		FileReader reader = new FileReader(file.writeToTempFile());
-		List<Event> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Event>>() {
-		}.getType());
-		for (Event evento : lista) {
-			if(!listaDeIds.contains(evento.getUuid())) {
-				listaDeIds.add(evento.getUuid());
-				totalDeEventos++;
-				String funcionalidade = evento.getFuncionalidade();
-				int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
-				mapa.put(funcionalidade, count + 1);
+		
+		boolean ehPrimeiroBD = criaArquivoSeNaoExistir(file);
+		if(!ehPrimeiroBD){
+			FileReader reader = new FileReader(file.writeToTempFile());
+			/*List<Event> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Event>>() {
+			}.getType());
+			for (Event evento : lista) {
+				if(!listaDeIds.contains(evento.getUuid())) {
+					listaDeIds.add(evento.getUuid());
+					totalDeEventos++;
+					String funcionalidade = evento.getFuncionalidade();
+					int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
+					mapa.put(funcionalidade, count + 1);
+				}
+			}
+			listaFuncionalidades.clear();
+	        Set<String> setFuncionalidades = mapa.keySet();*/
+		}
+	}	
+	
+	private boolean criaArquivoSeNaoExistir(FileUpload file){
+		File bdDashboard = new File("dashboard.bd");
+		if(!bdDashboard.exists()){
+			try {
+				bdDashboard.createNewFile();
+				RandomAccessFile writer = new RandomAccessFile(bdDashboard, "rw");
+				writer.write(file.getBytes());
+				writer.close();
+				return true;
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-		listaFuncionalidades.clear();
-        Set<String> setFuncionalidades = mapa.keySet(); 
-        boolean naoPrimeiraLinha = false ;
-        json = "[";
-        jsonTabela = "[";
-        for (String f : setFuncionalidades) {  
-        	Integer quantidade = mapa.get(f);
-        	Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
-        	String porcentagemFormatada = String.format("%.2f", porcentagem);
-            BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagemFormatada);
-            listaFuncionalidades.add(bdfuncionalidade);  
-            if(naoPrimeiraLinha){ this.json += ", "; this.jsonTabela += ", "; }
-            this.json += "['" + f + "', " + quantidade + "]";
-            this.jsonTabela += "['" + f + "', '" + quantidade + "', '" + porcentagemFormatada + "%']";
-			naoPrimeiraLinha = true;
-
-        }
-        this.json += "]";
-        this.jsonTabela += "]";
-	}	
+		return false;
+	}
 }
