@@ -5,18 +5,19 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class TikTak {
-	private String dir = "";
-	private String sistema;
+	private String caminhoDaPasta;
+	private String caminhoDoArquivo;
+	private String nomeDoSistema;
 
 	public TikTak(String sistema){
-		dir = null;
-		this.sistema = sistema;
+		caminhoDaPasta = "";
+		this.nomeDoSistema = sistema;
 	}
 	
-	public void setDir(String dir) {
-		if (!dir.endsWith("/"))
-			dir += "/";
-		this.dir = dir;
+	public void setDir(String nomeDaPasta) {
+		if (!nomeDaPasta.endsWith("/"))
+			nomeDaPasta += "/";
+		this.caminhoDaPasta = nomeDaPasta;
 	}
 	
 	public void log(String usuario, String evento) {
@@ -25,6 +26,12 @@ public class TikTak {
 		String json = GsonFactory.getGson().toJson(dados) + "\n";
 
 		try {
+			// paste = nomeDaPasta()ç
+			// criarpasta
+			// arquivo = nomeDoArquivo()
+			// criarArquivo()
+			criarPastaLog();
+			obterCaminhoDoArquivo();
 			File arquivo = criarArquivoLog();
 			RandomAccessFile raf = new RandomAccessFile(arquivo, "rw");
 			raf.readLine();
@@ -49,7 +56,7 @@ public class TikTak {
 		String diretorio = "";
 		String parametroSetDir, parametroGetProperty;
 		
-		parametroSetDir = this.dir;
+		parametroSetDir = this.caminhoDaPasta;
 		parametroGetProperty = System.getProperty("tiktak.dir");
 		if (parametroSetDir != null){
 			diretorio = parametroSetDir;
@@ -68,16 +75,27 @@ public class TikTak {
 		}
 		return diretorio;
 	}
-
-	private File criarArquivoLog() throws IOException {
-		criarPastaLog();
-		String caminhoDoArquivo;
-		if(this.dir == null) {
-			caminhoDoArquivo = "tik.tak";
+	
+	private String obterCaminhoDoArquivo() throws IOException {
+		String arquivo = "";
+		String parametroSetArquivo, parametroGetProperty;
+		
+		parametroSetArquivo = this.nomeDoSistema;
+		parametroGetProperty = System.getProperty("tiktak.system");
+		if (parametroSetArquivo != null){
+			nomeDoSistema = this.caminhoDaPasta + parametroSetArquivo;
+		} else if (parametroGetProperty != null) {
+			nomeDoSistema = this.caminhoDaPasta + parametroGetProperty;
 		} else {
-			caminhoDoArquivo = this.dir + "tik.tak";
+			nomeDoSistema = this.caminhoDaPasta + "DefaultSystem";
 		}
-		File arquivo = new File(caminhoDoArquivo);
+		arquivo = nomeDoSistema + ".tak";
+		this.caminhoDoArquivo = arquivo;
+		return arquivo;
+	}
+
+	private File criarArquivoLog() throws IOException {		
+		File arquivo = new File(this.caminhoDoArquivo);
 		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
 		System.out.println("1arquivo: " + arquivo.getAbsolutePath());
 		if (!arquivo.exists()) {
