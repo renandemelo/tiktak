@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/" xml:lang="en" lang="en">
+
+<head>	
+</head>
+
+<body>
+    <wicket:extend>
+    	<form wicket:id="form">
+	    	<div style=" border: solid; border-color: #888888;">
+	    		<p>Escolha um arquivo tik.tak para visualizar os dados</p>
+	    	</div>
+	    	<p><input type="file" wicket:id="upload" size="40"/></p>
+	    	<p><input type="submit" wicket:id="botao" value="Subir arquivo"/></p>
+			
+			<span style="display:none" id="dadosx" wicket:id="dados"></span>
+			<span style="display:none" id="dadosT" wicket:id="dadosTabela"></span>
+			
+		</form>
+		<br>
+		<div id='table_div'></div>
+		<br>
+		<!--Div that will hold the pie chart-->
+    	<div id="chart_div"></div>
+    	
+	    <!--Load the AJAX API-->
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	    <script type="text/javascript">
+	
+		 var dadosx = document.getElementById("dadosx").innerText;
+		 if(dadosx){
+	
+	      // Load the Visualization API and the piechart package.
+	      google.load('visualization', '1.0', {'packages':['corechart']});
+	
+	      // Set a callback to run when the Google Visualization API is loaded.
+	      google.setOnLoadCallback(drawChart);
+	
+	      // Callback that creates and populates a data table,
+	      // instantiates the pie chart, passes in the data and
+	      // draws it.
+	      function drawChart() {
+	
+	        // Create the data table.
+	        var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Topping');
+	        data.addColumn('number', 'Slices');
+	        
+	        data.addRows(eval(dadosx));	
+	        // Set chart options
+	        var options = {'title':'Quantidade de Funcionalidade',
+	                       'width':400,
+	                       'height':300};
+	
+	        // Instantiate and draw our chart, passing in some options.
+	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+	        chart.draw(data, options);
+	        }
+	     }
+	    </script>
+	    
+	    <script type='text/javascript'>
+	      google.load('visualization', '1', {packages:['table']});
+	      google.setOnLoadCallback(drawTable);
+	      function drawTable() {
+	        var dadosTabela = document.getElementById("dadosT").innerText;
+	        var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Funcionalidade');
+	        data.addColumn('string', 'Quantidade');
+	        data.addColumn('string', 'Porcentagem');
+	        data.addRows(eval(dadosTabela));  
+	
+	        var table = new google.visualization.Table(document.getElementById('table_div'));
+	        table.draw(data, {showRowNumber: false});
+	      }
+	    </script>
+	    
+    </wicket:extend>
+</body>
+</html>

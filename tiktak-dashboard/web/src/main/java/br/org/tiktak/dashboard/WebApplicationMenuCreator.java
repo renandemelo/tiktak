@@ -2,6 +2,7 @@ package br.org.tiktak.dashboard;
 
 import br.org.tiktak.dashboard.pages.AlterarSenhaPage;
 import br.org.tiktak.dashboard.pages.CrudUsuarioPage;
+import br.org.tiktak.dashboard.pages.importacao.UploadDeArquivo;
 import br.org.tiktak.dashboard.pages.tabela.Tabela;
 import jmine.tec.datadigester.web.pages.importacao.Importacao;
 import jmine.tec.persist.web.pages.audit.ConsultaTrilhaAuditoria;
@@ -29,6 +30,7 @@ public class WebApplicationMenuCreator extends AbstractMenuConfigFactoryBean {
         // add menu here
         config.addPage(Authorization.class, "Autorização", "Autorizar");
         config.addPage(Tabela.class, "Tabela", "Tabela");
+        config.addPage(UploadDeArquivo.class, "Upload", "Importar Arquivo");
         config.addPage(ConsultaTrilhaAuditoria.class, "Autorização", "Auditoria");
         config.addPage(ConsultaDiagnosticador.class, "Infra", "Diagnosticador");
         config.addPage(ConsultaExceptionRecord.class, "Infra", "Exceptions");
