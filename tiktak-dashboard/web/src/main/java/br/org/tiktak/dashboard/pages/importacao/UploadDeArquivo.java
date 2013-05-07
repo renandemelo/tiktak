@@ -104,4 +104,11 @@ public class UploadDeArquivo extends Template {
 		}
 		return false;
 	}
+	
+	private void deletaBD(){
+		File bdDashboard = new File("dashboard.bd");
+		if(bdDashboard.exists()){
+			bdDashboard.delete();
+		}
+	}
 }
