@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class TikTak {
-	private String caminhoDaPasta;
+	private String caminhoDoDiretorio;
 	private String caminhoDoArquivo;
 	private String nomeDoSistema;
 	private File arquivo;
 	private Eventv2 eventov2;
 
 	public TikTak(String sistema){
-		caminhoDaPasta = "";
+		caminhoDoDiretorio = "";
 		this.nomeDoSistema = sistema;
 		this.eventov2 = Eventv2.getInstance();
 		this.eventov2.Init(sistema);
 		try {
-			criarPastaLog();
+			criarDiretorioLog();
 			obterCaminhoDoArquivo();
 			criarArquivoLog();
 		} catch (IOException e) {
@@ -29,23 +29,16 @@ public class TikTak {
 		return caminhoDoArquivo;
 	}
 	
-	public void setDir(String nomeDaPasta) {
-		if (!nomeDaPasta.endsWith("/"))
-			nomeDaPasta += "/";
-		this.caminhoDaPasta = nomeDaPasta;
+	public void setDir(String nomeDoDiretorio) {
+		if (!nomeDoDiretorio.endsWith("/"))
+			nomeDoDiretorio += "/";
+		this.caminhoDoDiretorio = nomeDoDiretorio;
 	}
 	
 	public void log(String usuario, String nomeDoEvento) {
 		Event evento = new Event(usuario, nomeDoEvento);
-//		try {
-//			criarPastaLog();
-//			obterCaminhoDoArquivo();
-//			criarArquivoLog();
-			String json = GsonFactory.getGson().toJson(evento) + "\n";
-			concatenarJson(json);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		String json = GsonFactory.getGson().toJson(evento) + "\n";
+		concatenarJson(json);
 	}
 	
 	public void logv2(String usuario, String nomeDoEvento) {
@@ -75,18 +68,23 @@ public class TikTak {
 			e.printStackTrace();
 		}
 	}
-
-	private String criarPastaLog() throws IOException {
+	
+	private String obterCaminhoDoDiretorio() throws IOException {
 		String diretorio = "";
 		String parametroSetDir, parametroGetProperty;
 		
-		parametroSetDir = this.caminhoDaPasta;
+		parametroSetDir = this.caminhoDoDiretorio;
 		parametroGetProperty = System.getProperty("tiktak.dir");
 		if (parametroSetDir != null){
 			diretorio = parametroSetDir;
 		} else if (parametroGetProperty != null) {
 			diretorio = parametroGetProperty;
 		}
+		return diretorio;
+	}
+
+	private String criarDiretorioLog() throws IOException {
+		String diretorio = obterCaminhoDoDiretorio();
 		if (diretorio != "") {
 			System.out.println("diretorio não é null! =D " + diretorio);
 			
@@ -107,11 +105,11 @@ public class TikTak {
 		parametroSetArquivo = this.nomeDoSistema;
 		parametroGetProperty = System.getProperty("tiktak.system");
 		if (parametroSetArquivo != null){
-			nomeDoSistema = this.caminhoDaPasta + parametroSetArquivo;
+			nomeDoSistema = this.caminhoDoDiretorio + parametroSetArquivo;
 		} else if (parametroGetProperty != null) {
-			nomeDoSistema = this.caminhoDaPasta + parametroGetProperty;
+			nomeDoSistema = this.caminhoDoDiretorio + parametroGetProperty;
 		} else {
-			nomeDoSistema = this.caminhoDaPasta + "DefaultSystem";
+			nomeDoSistema = this.caminhoDoDiretorio + "DefaultSystem";
 		}
 		arquivo = nomeDoSistema + ".tak";
 		this.caminhoDoArquivo = arquivo;
