@@ -7,16 +7,20 @@ import java.io.RandomAccessFile;
 public class TikTak {
 	private String caminhoDoDiretorio;
 	private String caminhoDoArquivo;
+	private String caminhoCompletoDoArquivo;
 	private String nomeDoSistema;
 	private File arquivo;
 	private Eventv2 eventov2;
 
 	public TikTak(String sistema){
 		caminhoDoDiretorio = "";
-		this.nomeDoSistema = sistema;
+		caminhoDoArquivo = "";
+		nomeDoSistema = sistema;
+		// Implementado como um singleton
 		this.eventov2 = Eventv2.getInstance();
 		this.eventov2.Init(sistema);
 		try {
+			obterCaminhoDoDiretorio();
 			criarDiretorioLog();
 			obterCaminhoDoArquivo();
 			criarArquivoLog();
@@ -33,20 +37,32 @@ public class TikTak {
 		if (!nomeDoDiretorio.endsWith("/"))
 			nomeDoDiretorio += "/";
 		this.caminhoDoDiretorio = nomeDoDiretorio;
+		obterECriarNoDisco();
+	}
+	
+	public void obterECriarNoDisco() {
+		try {
+			obterCaminhoDoDiretorio();
+			criarDiretorioLog();
+			obterCaminhoDoArquivo();
+			criarArquivoLog();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void log(String usuario, String nomeDoEvento) {
-		Event evento = new Event(usuario, nomeDoEvento);
-		String json = GsonFactory.getGson().toJson(evento) + "\n";
-		concatenarJson(json);
+			Event evento = new Event(usuario, nomeDoEvento);
+			String json = GsonFactory.getGson().toJson(evento) + "\n";
+			concatenarJson(json);
 	}
 	
 	public void logv2(String usuario, String nomeDoEvento) {
-		Event evento = new Event(usuario, nomeDoEvento);
-		eventov2.getEvent().add(evento);
-		String json = GsonFactory.getGson().toJson(eventov2) + "\n";
-		System.out.println(json);
-		concatenarJson(json);
+			Event evento = new Event(usuario, nomeDoEvento);
+			eventov2.getEvent().add(evento);
+			String json = GsonFactory.getGson().toJson(eventov2) + "\n";
+			System.out.println(json);
+			concatenarJson(json);
 	}
 
 	private void concatenarJson(String json) {
@@ -70,17 +86,17 @@ public class TikTak {
 	}
 	
 	private String obterCaminhoDoDiretorio() throws IOException {
-		String diretorio = "";
+		// caminhoDoDiretorio = "";
 		String parametroSetDir, parametroGetProperty;
 		
 		parametroSetDir = this.caminhoDoDiretorio;
 		parametroGetProperty = System.getProperty("tiktak.dir");
 		if (parametroSetDir != null){
-			diretorio = parametroSetDir;
+			caminhoDoDiretorio = parametroSetDir;
 		} else if (parametroGetProperty != null) {
-			diretorio = parametroGetProperty;
+			caminhoDoDiretorio = parametroGetProperty;
 		}
-		return diretorio;
+		return caminhoDoDiretorio;
 	}
 
 	private String criarDiretorioLog() throws IOException {
