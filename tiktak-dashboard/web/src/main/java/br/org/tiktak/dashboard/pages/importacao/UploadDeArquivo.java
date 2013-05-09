@@ -18,12 +18,12 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 
+import com.google.gson.reflect.TypeToken;
+
 import bancosys.tec.exception.MessageCreator;
-import br.org.tiktak.core.Event;
+import br.org.tiktak.core.Eventv2;
 import br.org.tiktak.core.GsonFactory;
 import br.org.tiktak.dashboard.core.BDfuncionalidades;
-
-import com.google.gson.reflect.TypeToken;
 
 public class UploadDeArquivo extends Template {
 
@@ -32,6 +32,8 @@ public class UploadDeArquivo extends Template {
 	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
 	Integer totalDeEventos = 0;
 	Form<Void> form = new Form<Void>("form");
+	
+	File bdDashboard = new File("dashboard.bd");
 
 	@Override
 	protected MessageCreator getHelpTextCreator() {
@@ -73,24 +75,24 @@ public class UploadDeArquivo extends Template {
 		boolean ehPrimeiroBD = criaArquivoSeNaoExistir(file);
 		if(!ehPrimeiroBD){
 			FileReader reader = new FileReader(file.writeToTempFile());
-			/*List<Event> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Event>>() {
+			List<Eventv2> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Eventv2>>() {
 			}.getType());
-			for (Event evento : lista) {
-				if(!listaDeIds.contains(evento.getUuid())) {
-					listaDeIds.add(evento.getUuid());
-					totalDeEventos++;
-					String funcionalidade = evento.getFuncionalidade();
-					int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
-					mapa.put(funcionalidade, count + 1);
-				}
+			
+			String json = GsonFactory.getGson().toJson(lista.get(0));
+			try{
+				RandomAccessFile raf = new RandomAccessFile(bdDashboard, "rw");
+				raf.seek(raf.length() - 3);
+				raf.write((",\n" + json).getBytes());
+				raf.write("\n]".getBytes());
+				raf.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			listaFuncionalidades.clear();
-	        Set<String> setFuncionalidades = mapa.keySet();*/
+			
 		}
 	}	
 	
 	private boolean criaArquivoSeNaoExistir(FileUpload file){
-		File bdDashboard = new File("dashboard.bd");
 		if(!bdDashboard.exists()){
 			try {
 				bdDashboard.createNewFile();
