@@ -1,4 +1,4 @@
-package br.org.tiktak.testeAPI;
+package br.org.tiktak.tests.testeAPI;
 
 import static org.junit.Assert.assertTrue;
 

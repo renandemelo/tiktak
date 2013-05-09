@@ -9,10 +9,13 @@ public class TikTak {
 	private String caminhoDoArquivo;
 	private String nomeDoSistema;
 	private File arquivo;
+	private Eventv2 eventov2;
 
 	public TikTak(String sistema){
 		caminhoDaPasta = "";
 		this.nomeDoSistema = sistema;
+		this.eventov2 = Eventv2.getInstance();
+		this.eventov2.Init(sistema);
 	}
 	
 	public void setDir(String nomeDaPasta) {
@@ -28,6 +31,20 @@ public class TikTak {
 			obterCaminhoDoArquivo();
 			criarArquivoLog();
 			String json = GsonFactory.getGson().toJson(evento) + "\n";
+			concatenarJson(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void logv2(String usuario, String nomeDoEvento) {
+		Event evento = new Event(usuario, nomeDoEvento);
+		try {
+			criarPastaLog();
+			obterCaminhoDoArquivo();
+			criarArquivoLog();
+			eventov2.getEvent().add(evento);
+			String json = GsonFactory.getGson().toJson(eventov2) + "\n";
 			concatenarJson(json);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,6 +121,19 @@ public class TikTak {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
 			writer.write("[\n]".getBytes());
+			writer.close();
+		}		
+		return arquivo;
+	}
+	
+	private File criarArquivoLogv2() throws IOException {		
+		arquivo = new File(this.caminhoDoArquivo);
+		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
+		System.out.println("1arquivo: " + arquivo.getAbsolutePath());
+		if (!arquivo.exists()) {
+			arquivo.createNewFile();
+			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
+			writer.write("{\n}".getBytes());
 			writer.close();
 		}		
 		return arquivo;
