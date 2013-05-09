@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org/" xml:lang="en" lang="en">
 
-<head>	
+<head>
 </head>
 
 <body>
-    <wicket:extend>
-    	<form wicket:id="form">
-	    	<div style=" border: solid; border-color: #888888;">
-	    		<p>Escolha um arquivo tik.tak para visualizar os dados</p>
-	    	</div>
-	    	<p><input type="file" wicket:id="upload" size="40"/></p>
-	    	<p><input type="submit" wicket:id="botao" value="Subir arquivo"/></p>
-			
-			<span style="display:none" id="dadosx" wicket:id="dados"></span>
-			<span style="display:none" id="dadosT" wicket:id="dadosTabela"></span>
-			
+	<wicket:extend>
+		<form wicket:id="form">
+			<div style="border: solid; border-color: #888888;">
+				<p>Escolha um arquivo tik.tak para visualizar os dados</p>
+			</div>
+			<p>
+				<input type="file" wicket:id="upload" size="40" />
+			</p>
+			<p>
+				<input type="submit" wicket:id="botao" value="Subir arquivo" />
+			</p>
+
 		</form>
-	    
-    </wicket:extend>
+
+	</wicket:extend>
 </body>
 </html>
