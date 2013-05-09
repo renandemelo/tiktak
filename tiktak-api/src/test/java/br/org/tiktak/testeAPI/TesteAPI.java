@@ -31,11 +31,20 @@ public class TesteAPI {
 		this.evento = "TESTE-API-NOVO" + System.currentTimeMillis();
 	}
 
-	public String resultadoDaChamadaDoAPIPadrao(String arquivo) {
+	public String resultadoDaChamadaDoAPIPadraov1(String arquivo) {
 		setUsuario();
 		setEvento();
 
 		tiktak.log(this.usuario, this.evento);
+
+		return carregarConteudoArquivo(arquivo);
+	}
+	
+	public String resultadoDaChamadaDoAPIPadraov2(String arquivo) {
+		setUsuario();
+		setEvento();
+
+		tiktak.logv2(this.usuario, this.evento);
 
 		return carregarConteudoArquivo(arquivo);
 	}
@@ -81,24 +90,25 @@ public class TesteAPI {
 	/////////////////////////////////////////////////////////////////////////////
 	
 	@Test
-	public void testeVerificarUsuarioPadrao() {
+	public void testeVerificarUsuarioPadraov1() {
 		String nomeDoArquivo = tiktak.getCaminhoDoArquivo(); 
-				//"tik.tak";
-		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao(nomeDoArquivo);
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadraov1(nomeDoArquivo);
+		System.out.println("testeVerificarUsuarioPadraov1.ConteudoArquivo: " + conteudoArquivo);
+		System.out.println("Usuario: " + this.usuario);
 		assertTrue(conteudoArquivo.contains(this.usuario));
-		excluiArquivoCriadoParaTeste( nomeDoArquivo);
+		excluiArquivoCriadoParaTeste(nomeDoArquivo);
 	}
 	
 	@Test
-	public void testeVerificarEventoPadrao() {
+	public void testeVerificarEventoPadraov1() {
 		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
-		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao(nomeDoArquivo);
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadraov1(nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.evento));
-		excluiArquivoCriadoParaTeste( nomeDoArquivo);
+		excluiArquivoCriadoParaTeste(nomeDoArquivo);
 	}
 
 	@Test
-	public void testeVerificarUsuarioEventoSetDir() {
+	public void testeVerificarUsuarioEventoSetDirv1() {
 		setUsuario();
 		setEvento();
 		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
@@ -111,11 +121,29 @@ public class TesteAPI {
 		tiktak.log(this.usuario, this.evento);
 		System.out.println("path: " + diretorio + nomeDoArquivo);
 		
-		conteudoArquivo = carregarConteudoArquivo(diretorio + nomeDoArquivo);
+		conteudoArquivo = carregarConteudoArquivo(nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.evento));
 		
-		excluiArquivoCriadoParaTeste( diretorio + nomeDoArquivo);
+		excluiArquivoCriadoParaTeste(nomeDoArquivo);
 		excluiDiretorioCriadoParaTeste(diretorio);		
+	}
+	
+	@Test
+	public void testeVerificarUsuarioPadraov2() {
+		String nomeDoArquivo = tiktak.getCaminhoDoArquivo(); 
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadraov2(nomeDoArquivo);
+		System.out.println("ConteudoArquivo: " + conteudoArquivo);
+		System.out.println("Usuario: " + this.usuario);
+		assertTrue(conteudoArquivo.contains(this.usuario));
+		excluiArquivoCriadoParaTeste(nomeDoArquivo);
+	}
+	
+	@Test
+	public void testeVerificarEventoPadraov2() {
+		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadraov2(nomeDoArquivo);
+		assertTrue(conteudoArquivo.contains(this.evento));
+		excluiArquivoCriadoParaTeste(nomeDoArquivo);
 	}
 	
 	@Test
@@ -123,20 +151,16 @@ public class TesteAPI {
 		setUsuario();
 		setEvento();
 		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
-		String conteudoArquivo;		
-		String diretorio = "tiktakdir/";	
+		String diretorio = "tiktakdir/";
+		tiktak.setDir(diretorio);
 		
-		System.out.println("SetDir: " + diretorio);
-		tiktak.setDir(diretorio);		
-		System.out.println("log: " + diretorio + nomeDoArquivo);
-		tiktak.log(this.usuario, this.evento);
-		System.out.println("path: " + diretorio + nomeDoArquivo);
+		String conteudoArquivo = resultadoDaChamadaDoAPIPadraov2(nomeDoArquivo);
 		
-		conteudoArquivo = carregarConteudoArquivo(diretorio + nomeDoArquivo);
-		assertTrue(conteudoArquivo.contains("Testes"));
+		conteudoArquivo = carregarConteudoArquivo(nomeDoArquivo);
+		assertTrue(conteudoArquivo.contains("testes"));
 		assertTrue(conteudoArquivo.contains(this.evento));
 		
-		//excluiArquivoCriadoParaTeste(diretorio + nomeDoArquivo);
+		//excluiArquivoCriadoParaTeste(nomeDoArquivo);
 		//excluiDiretorioCriadoParaTeste(diretorio);		
 	}
 }

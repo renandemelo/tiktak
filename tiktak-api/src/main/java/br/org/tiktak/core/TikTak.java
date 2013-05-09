@@ -16,6 +16,13 @@ public class TikTak {
 		this.nomeDoSistema = sistema;
 		this.eventov2 = Eventv2.getInstance();
 		this.eventov2.Init(sistema);
+		try {
+			criarPastaLog();
+			obterCaminhoDoArquivo();
+			criarArquivoLog();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getCaminhoDoArquivo() {
@@ -30,15 +37,15 @@ public class TikTak {
 	
 	public void log(String usuario, String nomeDoEvento) {
 		Event evento = new Event(usuario, nomeDoEvento);
-		try {
-			criarPastaLog();
-			obterCaminhoDoArquivo();
-			criarArquivoLog();
+//		try {
+//			criarPastaLog();
+//			obterCaminhoDoArquivo();
+//			criarArquivoLog();
 			String json = GsonFactory.getGson().toJson(evento) + "\n";
 			concatenarJson(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void logv2(String usuario, String nomeDoEvento) {
