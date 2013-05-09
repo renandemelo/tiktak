@@ -14,10 +14,7 @@ import java.util.UUID;
 import jmine.tec.web.wicket.pages.Template;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
 
 import bancosys.tec.exception.MessageCreator;
 import br.org.tiktak.core.Event;
@@ -47,8 +44,6 @@ public class Tabela extends Template {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		final FileUploadField fileUploadField = new FileUploadField("upload");
-		form.add(fileUploadField);
 		// FIXME POG para inserir os dados da tabela
 		label = new Label("dados");
 		label.setEscapeModelStrings(false);
@@ -58,52 +53,16 @@ public class Tabela extends Template {
 		label2.setEscapeModelStrings(false);
 		form.add(label2);
 
-		carregaArquivo(fileUploadField);
+		carregaArquivo();
 
-		Button button = new Button("botao") {
-			@Override
-			public void onSubmit() {
-				super.onSubmit();
-				carregaArquivo(fileUploadField);
-			}
-
-		};
-		form.add(button);
 		this.add(form);
 	}
 
-	private void carregaArquivo(final FileUploadField fileUploadField) {
-		FileUpload fileUpload = fileUploadField.getFileUpload();
-		if (fileUpload == null) {
-			File file = new File("tik.tak");
-			if (file.exists()) {
-				try {
-					processarArquivo(new FileReader(file));
-					form.remove(label);
-					label = new Label("dados", json);
-					label.setEscapeModelStrings(false);
-					form.add(label);
-					form.remove(label2);
-					label2 = new Label("dadosTabela", jsonTabela);
-					label2.setEscapeModelStrings(false);
-					form.add(label2);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		// if (fileUpload == null) {
-		// warn("é necessário fornecer o arquivo");
-		// }
-		else {
+	private void carregaArquivo() {
+		File file = new File("tik.tak");
+		if (file.exists()) {
 			try {
-				FileReader reader = new FileReader(fileUpload.writeToTempFile());
-				processarArquivo(reader);
-				fileUpload.writeTo(new File("tik.tak"));
+				processarArquivo(new FileReader(file));
 				form.remove(label);
 				label = new Label("dados", json);
 				label.setEscapeModelStrings(false);
@@ -112,8 +71,12 @@ public class Tabela extends Template {
 				label2 = new Label("dadosTabela", jsonTabela);
 				label2.setEscapeModelStrings(false);
 				form.add(label2);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (IOException e) {
-				error("erro ao importar arquivo: " + e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
