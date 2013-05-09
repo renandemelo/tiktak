@@ -86,8 +86,6 @@ public class TikTak {
 	private String criarDiretorioLog() throws IOException {
 		String diretorio = obterCaminhoDoDiretorio();
 		if (diretorio != "") {
-			System.out.println("diretorio não é null! =D " + diretorio);
-			
 			File diretorioFisico = new File(diretorio);
 			
 			if (!diretorioFisico.exists()) {
@@ -118,8 +116,6 @@ public class TikTak {
 
 	private File criarArquivoLog() throws IOException {		
 		arquivo = new File(this.caminhoDoArquivo);
-		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
-		System.out.println("1arquivo: " + arquivo.getAbsolutePath());
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
@@ -131,8 +127,6 @@ public class TikTak {
 	
 	private File criarArquivoLogv2() throws IOException {		
 		arquivo = new File(this.caminhoDoArquivo);
-		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
-		System.out.println("1arquivo: " + arquivo.getAbsolutePath());
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
