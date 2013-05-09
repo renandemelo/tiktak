@@ -1,28 +1,27 @@
-[
+{
+    "sistema": "Jupiter-Web",
+    "eventos": [
 	{
-	    "sistema": "Jupiter-Web",
-	    "eventos": [
-		{
-		    "uuid": "bbddd8d1-1585-3929-84a0-37df38f9d5e2",
-		    "usuario": "RENATO",
-		    "evento": "CADASTRO DE CLIENTES"
-		},
-		{
-		    "uuid": "30aeeb35-1236-31c4-aaa1-fc14704362a1",
-		    "usuario": "JULIEN",
-		    "evento": "RESUMO ESCOLAR"
-		},
-		{
-		    "uuid": "bbddd8d1-1585-3929-84a0-37df38f9d5e3",
-		    "usuario": "ROBERTO",
-		    "evento": "ATESTADO DE MATRICULA"
-		},
-		{
-		    "uuid": "e55372cc-1236-37e8-a86e-8ef27b2aa256",
-		    "usuario": "WALLACE",
-		    "evento": "TESTANDO"
-		}
-	    ]
+	    "uuid": "bbddd8d1-1585-3929-84a0-37df38f9d5e2",
+	    "usuario": "RENATO",
+	    "evento": "CADASTRO DE CLIENTES"
+	},
+	{
+	    "uuid": "30aeeb35-1236-31c4-aaa1-fc14704362a1",
+	    "usuario": "JULIEN",
+	    "evento": "RESUMO ESCOLAR"
+	},
+	{
+	    "uuid": "bbddd8d1-1585-3929-84a0-37df38f9d5e3",
+	    "usuario": "ROBERTO",
+	    "evento": "ATESTADO DE MATRICULA"
+	},
+	{
+	    "uuid": "e55372cc-1236-37e8-a86e-8ef27b2aa256",
+	    "usuario": "WALLACE",
+	    "evento": "TESTANDO"
 	}
-]
+    ]
+}
+
 
