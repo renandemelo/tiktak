@@ -50,17 +50,10 @@ public class TikTak {
 	
 	public void logv2(String usuario, String nomeDoEvento) {
 		Event evento = new Event(usuario, nomeDoEvento);
-		try {
-			criarPastaLog();
-			obterCaminhoDoArquivo();
-			criarArquivoLog();
-			eventov2.getEvent().add(evento);
-			String json = GsonFactory.getGson().toJson(eventov2) + "\n";
-			System.out.println(json);
-			concatenarJson(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		eventov2.getEvent().add(evento);
+		String json = GsonFactory.getGson().toJson(eventov2) + "\n";
+		System.out.println(json);
+		concatenarJson(json);
 	}
 
 	private void concatenarJson(String json) {
