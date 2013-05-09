@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import jmine.tec.web.wicket.pages.Template;
 
+import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 
@@ -41,6 +42,7 @@ public class Tabela extends Template {
 		return null;
 	}
 
+	@SuppressWarnings({ "serial", "unchecked" })
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
@@ -55,6 +57,13 @@ public class Tabela extends Template {
 
 		carregaArquivo();
 
+		List tabs = new ArrayList();
+
+		tabs.add(new TabDeSistema("Sistema-1"));
+		tabs.add(new TabDeSistema("Sistema-2"));
+		tabs.add(new TabDeSistema("Sistema-3"));
+
+		add(new TabbedPanel("tabs", tabs));
 		this.add(form);
 	}
 
