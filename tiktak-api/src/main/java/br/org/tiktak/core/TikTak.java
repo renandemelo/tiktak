@@ -5,55 +5,48 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class TikTak {
-	private String caminhoDaPasta;
+	private String caminhoDoDiretorio;
 	private String caminhoDoArquivo;
 	private String nomeDoSistema;
 	private File arquivo;
 	private Eventv2 eventov2;
 
 	public TikTak(String sistema){
-		caminhoDaPasta = "";
+		caminhoDoDiretorio = "";
 		this.nomeDoSistema = sistema;
 		this.eventov2 = Eventv2.getInstance();
 		this.eventov2.Init(sistema);
+		try {
+			criarDiretorioLog();
+			obterCaminhoDoArquivo();
+			criarArquivoLog();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getCaminhoDoArquivo() {
 		return caminhoDoArquivo;
 	}
 	
-	public void setDir(String nomeDaPasta) {
-		if (!nomeDaPasta.endsWith("/"))
-			nomeDaPasta += "/";
-		this.caminhoDaPasta = nomeDaPasta;
+	public void setDir(String nomeDoDiretorio) {
+		if (!nomeDoDiretorio.endsWith("/"))
+			nomeDoDiretorio += "/";
+		this.caminhoDoDiretorio = nomeDoDiretorio;
 	}
 	
 	public void log(String usuario, String nomeDoEvento) {
 		Event evento = new Event(usuario, nomeDoEvento);
-		try {
-			criarPastaLog();
-			obterCaminhoDoArquivo();
-			criarArquivoLog();
-			String json = GsonFactory.getGson().toJson(evento) + "\n";
-			concatenarJson(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String json = GsonFactory.getGson().toJson(evento) + "\n";
+		concatenarJson(json);
 	}
 	
 	public void logv2(String usuario, String nomeDoEvento) {
 		Event evento = new Event(usuario, nomeDoEvento);
-		try {
-			criarPastaLog();
-			obterCaminhoDoArquivo();
-			criarArquivoLog();
-			eventov2.getEvent().add(evento);
-			String json = GsonFactory.getGson().toJson(eventov2) + "\n";
-			System.out.println(json);
-			concatenarJson(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		eventov2.getEvent().add(evento);
+		String json = GsonFactory.getGson().toJson(eventov2) + "\n";
+		System.out.println(json);
+		concatenarJson(json);
 	}
 
 	private void concatenarJson(String json) {
@@ -75,21 +68,24 @@ public class TikTak {
 			e.printStackTrace();
 		}
 	}
-
-	private String criarPastaLog() throws IOException {
+	
+	private String obterCaminhoDoDiretorio() throws IOException {
 		String diretorio = "";
 		String parametroSetDir, parametroGetProperty;
 		
-		parametroSetDir = this.caminhoDaPasta;
+		parametroSetDir = this.caminhoDoDiretorio;
 		parametroGetProperty = System.getProperty("tiktak.dir");
 		if (parametroSetDir != null){
 			diretorio = parametroSetDir;
 		} else if (parametroGetProperty != null) {
 			diretorio = parametroGetProperty;
 		}
+		return diretorio;
+	}
+
+	private String criarDiretorioLog() throws IOException {
+		String diretorio = obterCaminhoDoDiretorio();
 		if (diretorio != "") {
-			System.out.println("diretorio não é null! =D " + diretorio);
-			
 			File diretorioFisico = new File(diretorio);
 			
 			if (!diretorioFisico.exists()) {
@@ -107,11 +103,11 @@ public class TikTak {
 		parametroSetArquivo = this.nomeDoSistema;
 		parametroGetProperty = System.getProperty("tiktak.system");
 		if (parametroSetArquivo != null){
-			nomeDoSistema = this.caminhoDaPasta + parametroSetArquivo;
+			nomeDoSistema = this.caminhoDoDiretorio + parametroSetArquivo;
 		} else if (parametroGetProperty != null) {
-			nomeDoSistema = this.caminhoDaPasta + parametroGetProperty;
+			nomeDoSistema = this.caminhoDoDiretorio + parametroGetProperty;
 		} else {
-			nomeDoSistema = this.caminhoDaPasta + "DefaultSystem";
+			nomeDoSistema = this.caminhoDoDiretorio + "DefaultSystem";
 		}
 		arquivo = nomeDoSistema + ".tak";
 		this.caminhoDoArquivo = arquivo;
@@ -120,8 +116,6 @@ public class TikTak {
 
 	private File criarArquivoLog() throws IOException {		
 		arquivo = new File(this.caminhoDoArquivo);
-		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
-		System.out.println("1arquivo: " + arquivo.getAbsolutePath());
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");
@@ -133,8 +127,6 @@ public class TikTak {
 	
 	private File criarArquivoLogv2() throws IOException {		
 		arquivo = new File(this.caminhoDoArquivo);
-		System.out.println("1caminhoDoArquivo: " + caminhoDoArquivo);
-		System.out.println("1arquivo: " + arquivo.getAbsolutePath());
 		if (!arquivo.exists()) {
 			arquivo.createNewFile();
 			RandomAccessFile writer = new RandomAccessFile(arquivo, "rw");

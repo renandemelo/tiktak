@@ -33,7 +33,7 @@ public class Simulacao extends Template {
 			@Override
 			public void onSubmit() {
 				TikTak tiktak = new TikTak("Simulacao");
-				tiktak.log(usuario, funcionalidade);
+				tiktak.logv2(usuario, funcionalidade);
 				super.onSubmit();
 			}
 		});
