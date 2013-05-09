@@ -75,13 +75,13 @@ public class UploadDeArquivo extends Template {
 		boolean ehPrimeiroBD = criaArquivoSeNaoExistir(file);
 		if(!ehPrimeiroBD){
 			FileReader reader = new FileReader(file.writeToTempFile());
-			List<Eventv2> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Eventv2>>() {
+			Eventv2 sistema = GsonFactory.getGson().fromJson(reader, new TypeToken<Eventv2>() {
 			}.getType());
 			
-			String json = GsonFactory.getGson().toJson(lista.get(0));
+			String json = GsonFactory.getGson().toJson(sistema);
 			try{
 				RandomAccessFile raf = new RandomAccessFile(bdDashboard, "rw");
-				raf.seek(raf.length() - 3);
+				raf.seek(raf.length() - 2);
 				raf.write((",\n" + json).getBytes());
 				raf.write("\n]".getBytes());
 				raf.close();
@@ -97,7 +97,9 @@ public class UploadDeArquivo extends Template {
 			try {
 				bdDashboard.createNewFile();
 				RandomAccessFile writer = new RandomAccessFile(bdDashboard, "rw");
+				writer.writeBytes("[\n");
 				writer.write(file.getBytes());
+				writer.writeBytes("]");
 				writer.close();
 				return true;
 			} catch (IOException e) {
