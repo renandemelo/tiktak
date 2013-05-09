@@ -82,7 +82,8 @@ public class TesteAPI {
 	
 	@Test
 	public void testeVerificarUsuarioPadrao() {
-		String nomeDoArquivo = "tik.tak";
+		String nomeDoArquivo = tiktak.getCaminhoDoArquivo(); 
+				//"tik.tak";
 		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao(nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.usuario));
 		excluiArquivoCriadoParaTeste( nomeDoArquivo);
@@ -90,7 +91,7 @@ public class TesteAPI {
 	
 	@Test
 	public void testeVerificarEventoPadrao() {
-		String nomeDoArquivo = "tik.tak";
+		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
 		String conteudoArquivo = resultadoDaChamadaDoAPIPadrao(nomeDoArquivo);
 		assertTrue(conteudoArquivo.contains(this.evento));
 		excluiArquivoCriadoParaTeste( nomeDoArquivo);
@@ -100,7 +101,7 @@ public class TesteAPI {
 	public void testeVerificarUsuarioEventoSetDir() {
 		setUsuario();
 		setEvento();
-		String nomeDoArquivo = "tik.tak";
+		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
 		String conteudoArquivo;		
 		String diretorio = "tiktakdir/";	
 		
@@ -121,7 +122,7 @@ public class TesteAPI {
 	public void testeVerificarArquivov2() {
 		setUsuario();
 		setEvento();
-		String nomeDoArquivo = "Testes.tak";
+		String nomeDoArquivo = tiktak.getCaminhoDoArquivo();
 		String conteudoArquivo;		
 		String diretorio = "tiktakdir/";	
 		

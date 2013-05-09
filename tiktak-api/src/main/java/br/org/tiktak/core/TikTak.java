@@ -18,6 +18,10 @@ public class TikTak {
 		this.eventov2.Init(sistema);
 	}
 	
+	public String getCaminhoDoArquivo() {
+		return caminhoDoArquivo;
+	}
+	
 	public void setDir(String nomeDaPasta) {
 		if (!nomeDaPasta.endsWith("/"))
 			nomeDaPasta += "/";
@@ -45,6 +49,7 @@ public class TikTak {
 			criarArquivoLog();
 			eventov2.getEvent().add(evento);
 			String json = GsonFactory.getGson().toJson(eventov2) + "\n";
+			System.out.println(json);
 			concatenarJson(json);
 		} catch (IOException e) {
 			e.printStackTrace();
