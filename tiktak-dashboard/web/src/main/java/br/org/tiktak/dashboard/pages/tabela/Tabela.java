@@ -19,6 +19,7 @@ import org.apache.wicket.markup.html.form.Form;
 
 import bancosys.tec.exception.MessageCreator;
 import br.org.tiktak.core.Event;
+import br.org.tiktak.core.Eventv2;
 import br.org.tiktak.core.GsonFactory;
 import br.org.tiktak.dashboard.core.BDfuncionalidades;
 
@@ -26,15 +27,15 @@ import com.google.gson.reflect.TypeToken;
 
 public class Tabela extends Template {
 
-	List<BDfuncionalidades> listaFuncionalidades = new ArrayList<BDfuncionalidades>();
-	Set<UUID> listaDeIds = new HashSet<UUID>();
-	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
-	Integer totalDeEventos = 0;
-	String json = "";
-	String jsonTabela = "";
-	Label label;
-	Label label2;
-	Form<Void> form = new Form<Void>("form");
+//	List<BDfuncionalidades> listaFuncionalidades = new ArrayList<BDfuncionalidades>();
+//	Set<UUID> listaDeIds = new HashSet<UUID>();
+//	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
+//	Integer totalDeEventos = 0;
+//	String json = "";
+//	String jsonTabela = "";
+//	Label label;
+//	Label label2;
+//	Form<Void> form = new Form<Void>("form");
 
 	@Override
 	protected MessageCreator getHelpTextCreator() {
@@ -47,82 +48,99 @@ public class Tabela extends Template {
 	protected void onInitialize() {
 		super.onInitialize();
 		// FIXME POG para inserir os dados da tabela
-		label = new Label("dados");
-		label.setEscapeModelStrings(false);
-		form.add(label);
+//		label = new Label("dados");
+//		label.setEscapeModelStrings(false);
+//		form.add(label);
+//
+//		label2 = new Label("dadosTabela");
+//		label2.setEscapeModelStrings(false);
+//		form.add(label2);
 
-		label2 = new Label("dadosTabela");
-		label2.setEscapeModelStrings(false);
-		form.add(label2);
-
-		carregaArquivo();
-
+		Set<String> nomesSistemas = getNomesSistemas();
 		List tabs = new ArrayList();
 
-		tabs.add(new TabDeSistema("Sistema-1"));
-		tabs.add(new TabDeSistema("Sistema-2"));
-		tabs.add(new TabDeSistema("Sistema-3"));
+		for (String nomeDoSistema : nomesSistemas)
+			tabs.add(new TabDeSistema(nomeDoSistema));
 
 		add(new TabbedPanel("tabs", tabs));
-		this.add(form);
+
 	}
 
-	private void carregaArquivo() {
-		File file = new File("tik.tak");
+	private Set<String> getNomesSistemas() {
+		Set<String> nomesSistemas = new HashSet<String>();
+		File file = new File("dashboard.bd");
 		if (file.exists()) {
 			try {
-				processarArquivo(new FileReader(file));
-				form.remove(label);
-				label = new Label("dados", json);
-				label.setEscapeModelStrings(false);
-				form.add(label);
-				form.remove(label2);
-				label2 = new Label("dadosTabela", jsonTabela);
-				label2.setEscapeModelStrings(false);
-				form.add(label2);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				List<Eventv2> listaDeEventv2 = GsonFactory.getGson().fromJson(new FileReader(file),
+				new TypeToken<List<Eventv2>>() {}.getType());
+				for (Eventv2 eventv2 : listaDeEventv2)
+					nomesSistemas.add(eventv2.getSystem());		
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		return nomesSistemas;
 	}
-
-	private void processarArquivo(final FileReader reader) throws IOException {
-		List<Event> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Event>>() {
-		}.getType());
-		for (Event evento : lista) {
-			if (!listaDeIds.contains(evento.getUuid())) {
-				listaDeIds.add(evento.getUuid());
-				totalDeEventos++;
-				String funcionalidade = evento.getFuncionalidade();
-				int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
-				mapa.put(funcionalidade, count + 1);
-			}
-		}
-		listaFuncionalidades.clear();
-		Set<String> setFuncionalidades = mapa.keySet();
-		boolean naoPrimeiraLinha = false;
-		json = "[";
-		jsonTabela = "[";
-		for (String f : setFuncionalidades) {
-			Integer quantidade = mapa.get(f);
-			Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
-			String porcentagemFormatada = String.format("%.2f", porcentagem);
-			BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagemFormatada);
-			listaFuncionalidades.add(bdfuncionalidade);
-			if (naoPrimeiraLinha) {
-				this.json += ", ";
-				this.jsonTabela += ", ";
-			}
-			this.json += "['" + f + "', " + quantidade + "]";
-			this.jsonTabela += "['" + f + "', '" + quantidade + "', '" + porcentagemFormatada + "%']";
-			naoPrimeiraLinha = true;
-
-		}
-		this.json += "]";
-		this.jsonTabela += "]";
-	}
+//
+//	private void carregaArquivo() {
+//		File file = new File("tik.tak");
+//		if (file.exists()) {
+//			try {
+//				processarArquivo(new FileReader(file));
+//				form.remove(label);
+//				label = new Label("dados", json);
+//				label.setEscapeModelStrings(false);
+//				form.add(label);
+//				form.remove(label2);
+//				label2 = new Label("dadosTabela", jsonTabela);
+//				label2.setEscapeModelStrings(false);
+//				form.add(label2);
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+//
+//	private void processarArquivo(final FileReader reader) throws IOException {
+//		List<Event> lista = GsonFactory.getGson().fromJson(reader, new TypeToken<List<Event>>() {
+//		}.getType());
+//		for (Event evento : lista) {
+//			//if (eventov2.getSystem() == )
+//			
+//			if (!listaDeIds.contains(evento.getUuid())) {
+//				listaDeIds.add(evento.getUuid());
+//				totalDeEventos++;
+//				String funcionalidade = evento.getFuncionalidade();
+//				int count = mapa.containsKey(funcionalidade) ? mapa.get(funcionalidade) : 0;
+//				mapa.put(funcionalidade, count + 1);
+//			}
+//		}
+//		listaFuncionalidades.clear();
+//		Set<String> setFuncionalidades = mapa.keySet();
+//		boolean naoPrimeiraLinha = false;
+//		json = "[";
+//		jsonTabela = "[";
+//		for (String f : setFuncionalidades) {
+//			Integer quantidade = mapa.get(f);
+//			Float porcentagem = 100 * (quantidade.floatValue() / totalDeEventos);
+//			String porcentagemFormatada = String.format("%.2f", porcentagem);
+//			BDfuncionalidades bdfuncionalidade = new BDfuncionalidades(f, quantidade, porcentagemFormatada);
+//			listaFuncionalidades.add(bdfuncionalidade);
+//			if (naoPrimeiraLinha) {
+//				this.json += ", ";
+//				this.jsonTabela += ", ";
+//			}
+//			this.json += "['" + f + "', " + quantidade + "]";
+//			this.jsonTabela += "['" + f + "', '" + quantidade + "', '" + porcentagemFormatada + "%']";
+//			naoPrimeiraLinha = true;
+//
+//		}
+//		this.json += "]";
+//		this.jsonTabela += "]";
+//	}
 }
