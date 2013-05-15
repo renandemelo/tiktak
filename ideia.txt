@@ -1,0 +1,21 @@
+
+
+
+
+
+
+
+
+Disciplina
+		Notas - P
+			- T
+	avaliacao=
+		= 3*P+T
+
+- Adiciono disciplina..
+
+-Adiciono nota
+	- Tipo - T
+	- Nota
+
+- Quanto preciso?
