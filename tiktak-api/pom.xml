@@ -4,7 +4,7 @@
 	<groupId>br.org.tiktak</groupId>
 	<artifactId>tiktak-api</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.3-SNAPSHOT</version>
 	<name>tiktak-api</name>
 	<url>http://maven.apache.org</url>
 
